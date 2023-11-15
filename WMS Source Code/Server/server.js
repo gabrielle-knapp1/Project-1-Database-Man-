@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-app.use(express.static('Client/Public'));
+app.use(express.static('WMS Source Code/Client/Public'));
+const source = './WMS Source Code/Client/views';
 const port = 8080;
 
 //JSON Parser
@@ -11,19 +12,19 @@ app.use(bodyParser.urlencoded({
 }));
 
 //views
-app.get('/', function (req, res) {res.sendFile('index.html', {root: './Client/views'})});
-app.get('/menu', function (req, res) {res.sendFile('menu.html', {root: './Client/views'})});
-app.get('/cart', function (req, res) {res.sendFile('cart.html', {root: './Client/views'})});
-app.get('/favorites', function (req, res) {res.sendFile('favorites.html', {root: './Client/views'})});
-app.get('/account', function (req, res) {res.sendFile('account.html', {root: './Client/views'})});
-app.get('/transactionLog', function (req, res) {res.sendFile('transactionLog.html', {root: './Client/views'})});
-app.get('/adminUpdateWarehouse', function (req, res) {res.sendFile('adminUpdateWarehouse.html', {root: './Client/views'})});
-app.get('/adminManageUsers', function (req, res) {res.sendFile('adminManageUsers.html', {root: './Client/views'})});
-app.get('/admin', function (req, res) {res.sendFile('admin.html', {root: './Client/views'})});
-app.get('/changePass', function (req, res) {res.sendFile('changePass.html', {root: './Client/views'})});
-app.get('/home', function (req, res) {res.sendFile('home.html', {root: './Client/views'})});
-app.get('/previousTrans', function (req, res) {res.sendFile('previousTrans.html', {root: './Client/views'})});
-app.get('/warehouse', function (req, res) {res.sendFile('warehouse.html', {root: './Client/views'})});
+app.get('/', function (req, res) {res.sendFile('index.html', {root: source})});
+app.get('/menu', function (req, res) {res.sendFile('menu.html', {root: source})});
+app.get('/cart', function (req, res) {res.sendFile('cart.html', {root: source})});
+app.get('/favorites', function (req, res) {res.sendFile('favorites.html', {root: source})});
+app.get('/account', function (req, res) {res.sendFile('account.html', {root: source})});
+app.get('/transactionLog', function (req, res) {res.sendFile('transactionLog.html', {root: source})});
+app.get('/adminUpdateWarehouse', function (req, res) {res.sendFile('adminUpdateWarehouse.html', {root: source})});
+app.get('/adminManageUsers', function (req, res) {res.sendFile('adminManageUsers.html', {root: source})});
+app.get('/admin', function (req, res) {res.sendFile('admin.html', {root: source})});
+app.get('/changePass', function (req, res) {res.sendFile('changePass.html', {root: source})});
+app.get('/home', function (req, res) {res.sendFile('home.html', {root: source})});
+app.get('/previousTrans', function (req, res) {res.sendFile('previousTrans.html', {root: source})});
+app.get('/warehouse', function (req, res) {res.sendFile('warehouse.html', {root: source})});
 
 //Controllers
 const accountController = require('./Controllers/accountController');
