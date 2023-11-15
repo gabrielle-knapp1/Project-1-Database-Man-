@@ -1,0 +1,54 @@
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+	user: 'root',
+	password: 'root',
+	database: 'warehouse'
+});
+
+connection.connect((error) => {
+    if(error){
+      console.log('Error connecting to the MySQL Database');
+      return;
+    }
+    console.log('Connection established sucessfully');
+});
+
+async function selectQuery(sql) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, function (err, result, fields) {
+            if (err) reject(err);
+            console.log("Selected from database");
+            resolve(result);
+        });
+    });
+}
+
+function insertQuery(sql, values) {
+    connection.query(sql, [values], function (err, result) {
+        if (err) throw err;
+        console.log("Number of records inserted: " + result.affectedRows);
+    });
+}
+
+function updateQuery(sql) {
+    connection.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Number of records updated: " + result.affectedRows);
+    });
+}
+
+function deleteQuery(sql) {
+    connection.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Number of records deleted: " + result.affectedRows);
+    });
+}
+
+module.exports = {
+    selectQuery,
+    insertQuery,
+    updateQuery,
+    deleteQuery
+};
