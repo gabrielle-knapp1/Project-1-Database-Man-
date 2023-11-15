@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/global.js"></script>
     <link rel="stylesheet" href="./css/warehouse.css">
     <title>Browse the Warehouse!</title>
 </head>
 <body>
     
     <ul>
-        <li><a href="home.html">Go Home</a></li>
-        <li><a href="cart.html">View Cart</a></li>
+        <li><a onclick="ChangePage('/home')">Go Home</a></li>
+        <li><a onclick="ChangePage('/cart')">View Cart</a></li>
     </ul>
     <h2>Items in Warehouse:</h2>
     <table>

@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/global.js"></script>
     <link rel="stylesheet" href="./css/previousTrans.css">
     <title>View your previous Transactions!</title>
 </head>
 <body>
     
     <ul>
-        <li><a href="home.html">Go Home</a></li>
-        <li><a href="cart.html">View Cart</a></li>
+        <li><a onclick="ChangePage('/home')">Go Home</a></li>
+        <li><a onclick="ChangePage('/cart')">View Cart</a></li>
     </ul>
     <h2>Past Transactions:</h2>
     <table>
