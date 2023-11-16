@@ -7,7 +7,7 @@ async function checkLogin(req, res) {
     let pass = req.body.password;
     let admin = req.body.isAdmin;
     let adminPass = req.body.adminPassword;
-    const allAccounts = await mysql.selectQuery("select username, password, isAdmin from accounts");
+    const allAccounts = await mysql.selectQuery("select username, password, isAdmin from vAccounts");
     let response = {
         loginValid: false,
         message: "Username not found"
@@ -38,7 +38,7 @@ async function checkCreateAccount(req, res) {
     let pass = req.body.password;
     let admin = req.body.isAdmin;
     let adminPass = req.body.adminPassword;
-    const allAccounts = await mysql.selectQuery("select username, password, isAdmin from accounts");
+    const allAccounts = await mysql.selectQuery("select username, password, isAdmin from vAccounts");
     let response = {
         createValid: false,
         message: ""
@@ -57,7 +57,7 @@ async function checkCreateAccount(req, res) {
     }
     response.createValid = true;
     response.message = "Account created";
-    mysql.insertQuery("insert into accounts(username, password, isAdmin) values ?", [[uName, pass, admin]]);
+    mysql.insertQuery("insert into vAccounts(username, password, isAdmin) values ?", [[uName, pass, admin]]);
     res.send(response);
 }
 
