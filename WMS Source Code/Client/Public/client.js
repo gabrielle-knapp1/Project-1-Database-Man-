@@ -1,9 +1,7 @@
-const port = 8080;
-
 // AJAX requests
 async function TryLogin(loginData) {
     try {
-        const response = await fetch("http://localhost:" + port + "/api/account/login", {
+        const response = await fetch("/api/account/login", {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify(loginData),
@@ -23,7 +21,7 @@ async function TryLogin(loginData) {
 
 async function TrySignUp(loginData) {
     try {
-        const response = await fetch("http://localhost:" + port + "/api/account/create", {
+        const response = await fetch("/api/account/create", {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify(loginData),
@@ -42,7 +40,7 @@ async function TrySignUp(loginData) {
 }
 
 function DeleteLoginRecord() {
-    fetch("http://localhost:" + port + "/api/account/login", {
+    fetch("/api/account/login", {
         method: 'DELETE',
     }).then(response => {
         if (!response.ok) {console.error('Failed to delete login attempt record');}
@@ -50,7 +48,7 @@ function DeleteLoginRecord() {
 }
 
 function DeleteCreateRecord() {
-    fetch("http://localhost:" + port + "/api/account/create", {
+    fetch("/api/account/create", {
         method: 'DELETE',
     }).then(response => {
         if (!response.ok) {console.error('Failed to delete login attempt record');}

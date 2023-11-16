@@ -11,6 +11,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+//Client permissions
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
 //views
 app.get('/', function (req, res) {res.sendFile('index.html', {root: source})});
 app.get('/menu', function (req, res) {res.sendFile('menu.html', {root: source})});
