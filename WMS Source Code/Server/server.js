@@ -42,5 +42,7 @@ app.route('/api/account/login').post(accountController.checkLogin);
 app.route('/api/account/create').post(accountController.checkCreateAccount);
 app.route('/api/account/login').delete(accountController.deleteRecord);
 app.route('/api/account/create').delete(accountController.deleteRecord);
+app.route('/api/account/:id').delete(accountController.deleteAccount);
+app.route('/api/account').patch(accountController.updateAccount);
 
 app.listen(port, () => {console.log(`Warehouse Management System Website listening on port ${port}`)});

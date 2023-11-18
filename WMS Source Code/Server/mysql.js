@@ -32,23 +32,15 @@ function insertQuery(sql, values) {
     });
 }
 
-function updateQuery(sql) {
+function customQuery(sql) {
     connection.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Number of records updated: " + result.affectedRows);
     });
 }
 
-function deleteQuery(sql) {
-    connection.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log("Number of records deleted: " + result.affectedRows);
-    });
-}
-
 module.exports = {
     selectQuery,
     insertQuery,
-    updateQuery,
-    deleteQuery
+    customQuery
 };

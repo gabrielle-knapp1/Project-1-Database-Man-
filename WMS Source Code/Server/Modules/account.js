@@ -12,27 +12,20 @@ class Account {
 
 let currAccount;
 
-function createAccount(uName, pass, admin) {
-    setCurrAccount(new Account(uName, pass, admin));
-}
-
 function getCurrAccount() {
     return currAccount;
 }
 
 function setCurrAccount(newAccount) {
-    getCurrAccount(newAccount);
-    insertQuery('insert or update into accounts (username, password, isAdmin) VALUES ?', [[newAccount.username, newAccount.password, newAccount.isAdmin]]);
+    currAccount = newAccount;
 }
 
 function deleteAccount() {
-    //delete this account from database
     currAccount = new Account("", "", false);
 }
 
 module.exports = {
     Account,
-    createAccount,
     getCurrAccount,
     setCurrAccount,
     deleteAccount

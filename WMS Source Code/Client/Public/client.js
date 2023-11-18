@@ -34,7 +34,7 @@ async function TrySignUp(loginData) {
         console.error('Error creating account:', error);
         return {
             createValid: false,
-            message: 'Login failed',
+            message: 'Failed to create account',
         };
     }
 }
@@ -51,6 +51,41 @@ function DeleteCreateRecord() {
     fetch("/api/account/create", {
         method: 'DELETE',
     }).then(response => {
-        if (!response.ok) {console.error('Failed to delete login attempt record');}
-    }).catch(error => console.error('Error during login attempt record deletion:', error));
+        if (!response.ok) {console.error('Failed to delete create attempt record');}
+    }).catch(error => console.error('Error during create attempt record deletion:', error));
+}
+
+function DeleteAccount() {
+    fetch("/api/account/:id", {
+        method: 'DELETE',
+    }).then(response => {
+        if (!response.ok) {console.error('Failed to delete account');}
+    }).catch(error => console.error('Error during account deletion:', error));
+}
+
+async function UpdateAccount(updateData) {
+    try {
+        const response = await fetch("/api/account", {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify(updateData),
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log('Account update request sent:', data);
+        return {
+            username: data.username,
+            password: data.password,
+            isAdmin: data.isAdmin,
+            message: "Update successful"
+        };
+    } catch (error) {
+        console.error('Error during account update:', error);
+        return {
+            username: "",
+            password: "",
+            isAdmin: false,
+            message: 'Update failed'
+        };
+    }
 }
