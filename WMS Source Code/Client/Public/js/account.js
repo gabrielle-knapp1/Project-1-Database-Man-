@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     getAccount();
+    document.getElementById('updateForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        updateAccount();
+    });
 });
 
 async function getAccount() {
@@ -11,7 +15,11 @@ async function getAccount() {
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         if (data.success) {
-            //display the data somewhere
+            document.getElementById('username').innerText += " " + data.account.username;
+            document.getElementById('firstName').innerText += " " + data.account.firstName;
+            document.getElementById('lastName').innerText += " " + data.account.lastName;
+            document.getElementById('address').innerText += " " + data.account.address;
+            document.getElementById('email').innerText += " " + data.account.email;
         } else {
             console.error('Failed to get account info');
             alert('Failed to get account info');
@@ -24,11 +32,18 @@ async function getAccount() {
 
 async function updateAccount() {
     try {
-        //const { username, password, isAdmin, firstName, lastName, address, email, ogUsername };//get the data from the document elements
+        const username = document.getElementById('usernameInput').value;
+        const password = document.getElementById('passwordInput').value;
+        const firstName = document.getElementById('firstNameInput').value;
+        const lastName = document.getElementById('lastNameInput').value;
+        const address = document.getElementById('addressInput').value;
+        const email = document.getElementById('emailInput').value;
+        const ogUsername = document.getElementById('username').innerText.substring(10);
+
         const response = await fetch('/api/account', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password, isAdmin, firstName, lastName, address, email, ogUsername }),
+            body: JSON.stringify({ username, password, firstName, lastName, address, email, ogUsername }),
         });
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();

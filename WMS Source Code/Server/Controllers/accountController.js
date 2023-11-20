@@ -73,7 +73,7 @@ async function getAccount(req, res) {
     if (!username) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
-    const rows = await mysql.selectQuery("select username, firstName, lastName, DOB from account where username=?", [username]);
+    const rows = await mysql.selectQuery("select username, firstName, lastName, address, email from vAccounts where username=?", [username]);
     if (rows.length === 1) {
         res.send({ success: true, account: rows[0]});
     } else {
@@ -83,8 +83,8 @@ async function getAccount(req, res) {
 
 function updateAccount(req, res) {
     try {
-        const { username, password, isAdmin, firstName, lastName, address, email, ogUsername } = req.body;
-        let sql = "update account set ";
+        const { username, password, firstName, lastName, address, email, ogUsername } = req.body;
+        let sql = "update vAccounts set ";
         let values = [];
         let changed = false;
         if (username !== '') {
@@ -96,11 +96,6 @@ function updateAccount(req, res) {
         if (password !== '') {
             sql += "password=?, ";
             values.push(hashPassword(password));
-            changed = true;
-        }
-        if (isAdmin !== '') {
-            sql += "isAdmin=?, ";
-            values.push(isAdmin);
             changed = true;
         }
         if (firstName !== '') {
