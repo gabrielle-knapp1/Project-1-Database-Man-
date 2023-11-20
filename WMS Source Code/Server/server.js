@@ -46,18 +46,24 @@ function requireLogin(req, res, next) {
 }
 
 //views
+//both
 app.get('/', function (req, res) {res.sendFile('index.html', {root: source})});
+app.get('/account', requireLogin, function (req, res) {res.sendFile('account.html', {root: source})});
+//regular users
+app.get('/home', requireLogin, function (req, res) {res.sendFile('home.html', {root: source})});
 app.get('/cart', requireLogin, function (req, res) {res.sendFile('cart.html', {root: source})});
 app.get('/favorites', requireLogin, function (req, res) {res.sendFile('favorites.html', {root: source})});
-app.get('/account', requireLogin, function (req, res) {res.sendFile('account.html', {root: source})});
 app.get('/transactionLog', requireLogin, function (req, res) {res.sendFile('transactionLog.html', {root: source})});
-app.get('/adminUpdateWarehouse', requireLogin, function (req, res) {res.sendFile('adminUpdateWarehouse.html', {root: source})});
-app.get('/adminManageUsers', requireLogin, function (req, res) {res.sendFile('adminManageUsers.html', {root: source})});
-app.get('/admin', requireLogin, function (req, res) {res.sendFile('admin.html', {root: source})});
-app.get('/changePass', requireLogin, function (req, res) {res.sendFile('changePass.html', {root: source})});
-app.get('/home', requireLogin, function (req, res) {res.sendFile('home.html', {root: source})});
-app.get('/previousTrans', requireLogin, function (req, res) {res.sendFile('previousTrans.html', {root: source})});
 app.get('/warehouse', requireLogin, function (req, res) {res.sendFile('warehouse.html', {root: source})});
+//admin
+app.get('/adminHome', requireLogin, function (req, res) {res.sendFile('adminHome.html', {root: source})});
+app.get('/adminAccounts', requireLogin, function (req, res) {res.sendFile('adminAccounts.html', {root: source})});
+app.get('/adminTransactionLog', requireLogin, function (req, res) {res.sendFile('adminTransactionLog.html', {root: source})});
+app.get('/adminLog', requireLogin, function (req, res) {res.sendFile('adminLog.html', {root: source})});
+app.get('/adminWarehouse', requireLogin, function (req, res) {res.sendFile('adminWarehouse.html', {root: source})});
+//redundant
+//app.get('/changePass', requireLogin, function (req, res) {res.sendFile('changePass.html', {root: source})});
+//app.get('/previousTrans', requireLogin, function (req, res) {res.sendFile('previousTrans.html', {root: source})});
 
 //Controllers
 const accountController = require('./Controllers/accountController');
