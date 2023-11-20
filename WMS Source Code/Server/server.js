@@ -63,7 +63,6 @@ app.get('/adminAccounts', requireLogin, function (req, res) {res.sendFile('admin
 app.get('/adminTransactionLog', requireLogin, function (req, res) {res.sendFile('adminTransactionLog.html', {root: source})});
 app.get('/adminLog', requireLogin, function (req, res) {res.sendFile('adminLog.html', {root: source})});
 app.get('/adminWarehouse', requireLogin, function (req, res) {res.sendFile('adminWarehouse.html', {root: source})});
-//redundant
 
 //Controllers
 const accountController = require('./Controllers/accountController');
