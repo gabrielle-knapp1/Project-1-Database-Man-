@@ -11,7 +11,11 @@ async function setWelcomeText() {
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         if (data.success) {
-            document.getElementById('welcome').innerText = `Hello ${data.account.firstName}! Welcome to the Main Menu of the Warehouse Management System!`;
+            const name = data.account.firstName;
+            if (name != null)
+            document.getElementById('welcome').innerText = name != null?
+                `Hello ${name}! Welcome to the Main Menu of the Warehouse Management System!`:
+                "Welcome to the Main Menu of the Warehouse Management System!";
         } else {
             console.error('Failed to get account info');
             alert('Failed to get account info');
