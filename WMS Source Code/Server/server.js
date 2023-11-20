@@ -47,7 +47,6 @@ function requireLogin(req, res, next) {
 
 //views
 app.get('/', function (req, res) {res.sendFile('index.html', {root: source})});
-app.get('/menu', requireLogin, function (req, res) {res.sendFile('menu.html', {root: source})});
 app.get('/cart', requireLogin, function (req, res) {res.sendFile('cart.html', {root: source})});
 app.get('/favorites', requireLogin, function (req, res) {res.sendFile('favorites.html', {root: source})});
 app.get('/account', requireLogin, function (req, res) {res.sendFile('account.html', {root: source})});

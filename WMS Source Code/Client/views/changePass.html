@@ -1,31 +1,30 @@
+<!-- Eventually we will delete this page and move its functionality to the account.html page
+We can also delete changePass.js and changePass.css-->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./js/global.js"></script>
-    <script src="./js/changePass.js"></script>
-    <link rel="stylesheet" href="./css/changePass.css">
-    <title>Admin Menu</title>
-</head>
-<body>
-    
-    <ul>
-        <li><a onclick="ChangePage('/home')">Go Home</a></li>
-        
-    </ul>
-    <h1> Change Password Page!</h1>
-    <form id="loginForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="./js/global.js"></script>
+        <script src="./js/changePass.js"></script>
+        <link rel="stylesheet" href="./css/changePass.css">
+        <title>Change Password</title>
+    </head>
+    <body>
+        <ul>
+            <li><a onclick="ChangePage('/home')">Go Home</a></li>
+        </ul>
+        <h1> Change Password Page!</h1>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
 
-        <label for=" oldpassword">Current Password:</label>
-        <input type="oldpassword" id="oldpassword" name="oldpassword" required>
+            <label for=" oldpassword">Current Password:</label>
+            <input type="oldpassword" id="oldpassword" name="oldpassword" required>
 
-        <label for=" password">New  Password:</label>
-        <input type="password" id="password" name="password" required>
+            <label for=" password">New  Password:</label>
+            <input type="password" id="password" name="password" required>
 
-        <button type="button" onclick="login()">Login</button>
-    </form>
-</body>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+    </body>
 </html>

@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./js/global.js"></script>
-    <link rel="stylesheet" href="./css/warehouse.css">
-    <title>Browse the Warehouse!</title>
-</head>
-<body>
-    
-    <ul>
-        <li><a onclick="ChangePage('/home')">Go Home</a></li>
-        <li><a onclick="ChangePage('/cart')">View Cart</a></li>
-    </ul>
-    <h2>Items in Warehouse:</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Baby Doll</td>
-                <td>1</td>
-                <td>$200.00</td>
-                <td><button>Add to Favorites</button></td>
-                <td><button>Add to Carts</button></td>
-            </tr>
-        </tbody>
-    </table>
-</body>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="./js/global.js"></script>
+        <script src="./js/warehouse.js"></script>
+        <link rel="stylesheet" href="./css/global.css">
+        <link rel="stylesheet" href="./css/warehouse.css">
+        <title>Warehouse</title>
+    </head>
+    <body>
+        <ul>
+            <li><a onclick="ChangePage('/home')">Go Home</a></li>
+            <li><a onclick="ChangePage('/cart')">View Cart</a></li>
+        </ul>
+        <h2>Items in Warehouse:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Baby Doll</td>
+                    <td>1</td>
+                    <td>$200.00</td>
+                    <td><button>Add to Favorites</button></td>
+                    <td><button>Add to Carts</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
 </html>

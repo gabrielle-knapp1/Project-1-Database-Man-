@@ -1,3 +1,5 @@
+/*This goes to the previousTransactions.html page, but we don't need that page
+I think we can either get rid of this page or copy its contents over to transactionLog.css*/
 ul {
     list-style-type: none;
     margin: 0;
