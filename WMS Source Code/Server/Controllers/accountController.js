@@ -135,13 +135,32 @@ function updateAccount(req, res) {
     }
 }
 
-async function deleteAccount(req, res) {
-    //to be implemented
+async function deleteCurrentAccount(req, res) {//to delete your own account
+    try {
+        const username = req.session.username;
+        mysql.insertQuery("delete from vAccounts where username=?", [username]);
+        req.session.destroy();
+        res.send("Account deleted");
+    } catch {
+        req.session.destroy();
+        res.send("Error during account deletion");
+    }
+}
+
+async function deleteUserAccount(req, res) {//for admins to delete other user's accounts
+    try {
+        const username = req.params.id;
+        mysql.insertQuery("delete from vAccounts where username=?", [username]);
+        res.send("Account deleted");
+    } catch {
+        req.session.destroy();
+        res.send("Error during account deletion");
+    }
 }
 
 function logout(req, res) {
     req.session.destroy();
-    res.send("Your are logged out ");
+    res.send("Your are logged out");
 }
 
 module.exports = {
@@ -149,6 +168,7 @@ module.exports = {
     checkCreateAccount,
     getAccount,
     updateAccount,
-    deleteAccount,
+    deleteCurrentAccount,
+    deleteUserAccount,
     logout
 };

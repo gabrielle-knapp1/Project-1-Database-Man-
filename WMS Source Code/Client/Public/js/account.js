@@ -44,6 +44,17 @@ async function updateAccount() {
     }
 }
 
-function DeleteAccount() {
-    //to be implemented
+async function DeleteAccount() {
+    try {
+        const response = await fetch('/api/account', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error deleting account:', error);
+        alert('An error occurred while deleting your account');
+    }
 }
