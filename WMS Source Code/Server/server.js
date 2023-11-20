@@ -8,6 +8,7 @@ const source = './WMS Source Code/Client/views';
 const port = 8080;
 app.use(cookieParser());
 
+//session
 app.use(session({
     genid: (req) => {
         return uuid.v4();
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
     next();
 });
 
+//users must login before going to a page directly
 function requireLogin(req, res, next) {
     if (req.session && req.session.username) {
         return next();
@@ -62,8 +64,6 @@ app.get('/adminTransactionLog', requireLogin, function (req, res) {res.sendFile(
 app.get('/adminLog', requireLogin, function (req, res) {res.sendFile('adminLog.html', {root: source})});
 app.get('/adminWarehouse', requireLogin, function (req, res) {res.sendFile('adminWarehouse.html', {root: source})});
 //redundant
-//app.get('/changePass', requireLogin, function (req, res) {res.sendFile('changePass.html', {root: source})});
-//app.get('/previousTrans', requireLogin, function (req, res) {res.sendFile('previousTrans.html', {root: source})});
 
 //Controllers
 const accountController = require('./Controllers/accountController');

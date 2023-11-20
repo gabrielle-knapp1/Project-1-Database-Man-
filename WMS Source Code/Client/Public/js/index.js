@@ -7,7 +7,7 @@ function login() {
         isAdmin: false,
         adminPassword: ""
     };
-    TryLogin(loginData);
+    TryLogin(loginData, "/home");
 }
 
 function signUp() {
@@ -19,7 +19,7 @@ function signUp() {
         isAdmin: false,
         adminPassword: ""
     };
-    TrySignUp(loginData);
+    TrySignUp(loginData, "/home");
 }
 
 function loginAsAdmin() {
@@ -32,7 +32,7 @@ function loginAsAdmin() {
         isAdmin: true,
         adminPassword: adminPass
     };
-    TryLogin(loginData);
+    TryLogin(loginData, "/adminHome");
 }
 
 function signUpAsAdmin() {
@@ -45,10 +45,10 @@ function signUpAsAdmin() {
         isAdmin: true,
         adminPassword: adminPass
     };
-    TrySignUp(loginData);
+    TrySignUp(loginData, "/adminHome");
 }
 
-async function TryLogin(loginData) {
+async function TryLogin(loginData, page) {
     try {
         const response = await fetch("/api/account/login", {
             method: 'POST',
@@ -58,14 +58,14 @@ async function TryLogin(loginData) {
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log('Login request sent:', data);
-        if (data.loginValid) ChangePage('/home');
+        if (data.loginValid) ChangePage(page);
         else alert(data.message);
     } catch (error) {
         console.error('Error during login:', error);
     }
 }
 
-async function TrySignUp(loginData) {
+async function TrySignUp(loginData, page) {
     try {
         const response = await fetch("/api/account/create", {
             method: 'POST',
@@ -75,7 +75,7 @@ async function TrySignUp(loginData) {
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log('Account creation request sent:', data);
-        if (data.createValid) ChangePage('/home');
+        if (data.createValid) ChangePage(page);
         else alert(data.message);
     } catch (error) {
         console.error('Error creating account:', error);

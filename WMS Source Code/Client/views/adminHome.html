@@ -6,19 +6,17 @@
         <script src="./js/adminHome.js"></script>
         <link rel="stylesheet" href="./css/global.css">
         <link rel="stylesheet" href="./css/home.css">
-        <link rel="stylesheet" href="./css/adminHome.css"><!--This might not be necessary-->
+        <link rel="stylesheet" href="./css/adminHome.css"><!--This might not be necessary, we could just use home.css for both-->
         <title>Admin Home</title>
     </head>
     <body>
         <ul>
-            <li><a onclick="ChangePage('/home')">Go Home</a></li>
-            <li><a>Edit User Data</a></li>
-            <li><a>View All Transactions</a></li>
-            <li><a>View Storage Info</a></li>
-            <li><a>View Providers Info</a></li>
-            
+            <li><button type="button" onclick="ChangePage('/adminAccounts')">User Data</button></li>
+            <li><button type="button" onclick="ChangePage('/adminTransactionLog')">User Transaction Log</button></li>
+            <li><button type="button" onclick="ChangePage('/adminLog')">Admin Log</button></li>
+            <li><button type="button" onclick="ChangePage('/adminWarehouse')">Warehouse</button></li>
+            <li><button type="button" onclick="ChangePage('/account')">Account</button></li>
         </ul>
-        <h1>Welcome to the Admin Menu of the Warehouse Management System!</h1>
-        <h2>Choose what action you would like to perform</h2>
+        <h1>Welcome to the Main Menu of the Warehouse Management System!</h1>
     </body>
 </html>
