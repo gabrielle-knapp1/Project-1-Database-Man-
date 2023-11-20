@@ -9,8 +9,106 @@
         <link rel="stylesheet" href="./css/adminWarehouse.css">
     </head>
     <body>
-        <ul>
-            <li><button type="button" onclick="ChangePage('/adminHome')">Go Home</button></li>
-        </ul>
-    </body>
+      <body>
+
+    <ul>
+        <li><a href="adminHome.html">Go Home</a></li>
+    </ul>
+    
+    <h2>Warehouse Items:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><button onclick="openModal(0)">0</button></td>
+                <td>Baby Doll</td>
+                <td>1</td>
+                <td>$200.00</td>
+                <td><button>Add to Favorites</button></td>
+                <td><button>Add to Carts</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="openModal(1)">1</button></td>
+                <td>Again</td>
+                <td>2</td>
+                <td>$300.00</td>
+                <td><button>Add to Favorites</button></td>
+                <td><button>Add to Carts</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="openModal(2)">2</button></td>
+                <td>Once</td>
+                <td>11</td>
+                <td>$500.00</td>
+                <td><button>Add to Favorites</button></td>
+                <td><button>Add to Carts</button></td>
+            </tr>
+        </tr>
+        <tr>
+            <td><button onclick="openModal(3)">3</button></td>
+            <td>Again</td>
+            <td>2</td>
+            <td>$300.00</td>
+            <td><button>Add to Favorites</button></td>
+            <td><button>Add to Carts</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="openModal(4)">4</button></td>
+            <td>Once</td>
+            <td>11</td>
+            <td>$500.00</td>
+            <td><button>Add to Favorites</button></td>
+            <td><button>Add to Carts</button></td>
+        </tr>
+    </tr>
+    <tr>
+        <td><button onclick="openModal(5)">5</button></td>
+        <td>Again</td>
+        <td>2</td>
+        <td>$300.00</td>
+        <td><button>Add to Favorites</button></td>
+        <td><button>Add to Carts</button></td>
+    </tr>
+    <tr>
+        <td><button onclick="openModal(6)">6</button></td>
+        <td>Once</td>
+        <td>11</td>
+        <td>$500.00</td>
+        <td><button>Add to Favorites</button></td>
+        <td><button>Add to Carts</button></td>
+    </tr>
+        </tbody>
+    </table>
+    <div class="modal" id="myModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modalContent"></p>
+        </div>
+    </div>
+    <script>
+       function openModal(id) {
+        var modal = document.getElementById("myModal");
+        var modalContent = document.getElementById("modalContent");
+
+        // Set the content of the modal (you can customize this)
+        modalContent.innerHTML = 'Content for ID ' + id;
+
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+    </script>
+    
+</body>
+
 </html>
