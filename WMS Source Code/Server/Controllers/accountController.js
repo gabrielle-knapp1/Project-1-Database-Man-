@@ -104,17 +104,17 @@ function updateAccount(req, res) {
             changed = true;
         }
         if (lastName !== '') {
-            sql += "lastName=? ";
+            sql += "lastName=?, ";
             values.push(lastName);
             changed = true;
         }
         if (address !== '') {
-            sql += "address=? ";
+            sql += "address=?, ";
             values.push(address);
             changed = true;
         }
         if (email !== '') {
-            sql += "email=? ";
+            sql += "email=?, ";
             values.push(email);
             changed = true;
         }
@@ -130,32 +130,30 @@ function updateAccount(req, res) {
     }
 }
 
-async function deleteCurrentAccount(req, res) {//to delete your own account
+function deleteCurrentAccount(req, res) {//to delete your own account
     try {
         const username = req.session.username;
         mysql.insertQuery("delete from vAccounts where username=?", [username]);
         req.session.destroy();
-        res.send("Account deleted");
+        res.send({success: true, message: "Account deleted"});
     } catch {
-        req.session.destroy();
-        res.send("Error during account deletion");
+        res.send({success: true, message: "Error during account deletion"});
     }
 }
 
-async function deleteUserAccount(req, res) {//for admins to delete other user's accounts
+function deleteUserAccount(req, res) {//for admins to delete other user's accounts
     try {
         const username = req.params.id;
         mysql.insertQuery("delete from vAccounts where username=?", [username]);
-        res.send("Account deleted");
+        res.send({success: true, message: "Account deleted"});
     } catch {
-        req.session.destroy();
-        res.send("Error during account deletion");
+        res.send({success: true, message: "Error during account deletion"});
     }
 }
 
 function logout(req, res) {
     req.session.destroy();
-    res.send("Your are logged out");
+    res.send({message: "Your are logged out"});
 }
 
 module.exports = {

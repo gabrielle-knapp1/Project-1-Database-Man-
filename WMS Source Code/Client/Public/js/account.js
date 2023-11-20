@@ -59,15 +59,22 @@ async function updateAccount() {
     }
 }
 
+function ConfirmDeleteAccount() {
+    const userConfirmed = confirm('Are you sure you want to delete your account?');
+    console.log(userConfirmed);
+    if (userConfirmed) DeleteAccount();
+    return userConfirmed;
+}
+
 async function DeleteAccount() {
     try {
         const response = await fetch('/api/account', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
+            method: 'DELETE'
         });
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log(data);
+        if (data.success) ChangePage("/");
     } catch (error) {
         console.error('Error deleting account:', error);
         alert('An error occurred while deleting your account');
