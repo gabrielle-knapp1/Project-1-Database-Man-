@@ -78,6 +78,7 @@ app.route('/api/account').delete(accountController.deleteCurrentAccount);
 app.route('/api/account/:id').delete(accountController.deleteUserAccount);
 app.route('/api/account/logout').get(accountController.logout);
 app.route('/api/account/session').get(accountController.getSession);
+app.route('/api/accounts').get(accountController.getAccounts);
 //warehouse
 //app.route('/api/warehouse').get(warehouseController.demoFunction);
 

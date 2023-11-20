@@ -163,6 +163,11 @@ function getSession(req, res) {
     res.send({session: req.session});
 }
 
+async function getAccounts(req, res) {
+    const rows = await mysql.selectQuery("select username, firstName, lastName, address, email from vAccounts", []);
+    res.send({ success: true, accounts: rows});
+}
+
 module.exports = {
     checkLogin,
     checkCreateAccount,
@@ -171,5 +176,6 @@ module.exports = {
     deleteCurrentAccount,
     deleteUserAccount,
     logout,
-    getSession
+    getSession,
+    getAccounts
 };
