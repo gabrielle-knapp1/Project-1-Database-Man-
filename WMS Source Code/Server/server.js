@@ -66,8 +66,10 @@ app.get('/adminWarehouse', requireLogin, function (req, res) {res.sendFile('admi
 
 //Controllers
 const accountController = require('./Controllers/accountController');
+const warehouseController = require('./Controllers/warehouseController');
 
 //routes
+//account
 app.route('/api/account/login').post(accountController.checkLogin);
 app.route('/api/account/create').post(accountController.checkCreateAccount);
 app.route('/api/account').get(accountController.getAccount);
@@ -76,5 +78,7 @@ app.route('/api/account').delete(accountController.deleteCurrentAccount);
 app.route('/api/account/:id').delete(accountController.deleteUserAccount);
 app.route('/api/account/logout').get(accountController.logout);
 app.route('/api/account/session').get(accountController.getSession);
+//warehouse
+//app.route('/api/warehouse').get(warehouseController.demoFunction);
 
 app.listen(port, () => {console.log(`Warehouse Management System Website listening on port ${port}`)});
