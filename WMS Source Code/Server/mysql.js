@@ -15,9 +15,9 @@ connection.connect((error) => {
     console.log('Connection established sucessfully');
 });
 
-async function selectQuery(sql) {
+async function selectQuery(sql, values) {
     return new Promise((resolve, reject) => {
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, [values], function (err, result, fields) {
             if (err) reject(err);
             console.log("Selected from database");
             resolve(result);
@@ -26,21 +26,13 @@ async function selectQuery(sql) {
 }
 
 function insertQuery(sql, values) {
-    connection.query(sql, [values], function (err, result) {
+    connection.query(sql, values, function (err, result) {
         if (err) throw err;
-        console.log("Number of records inserted: " + result.affectedRows);
-    });
-}
-
-function customQuery(sql) {
-    connection.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log("Number of records updated: " + result.affectedRows);
+        console.log("Number of records affected: " + result.affectedRows);
     });
 }
 
 module.exports = {
     selectQuery,
-    insertQuery,
-    customQuery
+    insertQuery
 };

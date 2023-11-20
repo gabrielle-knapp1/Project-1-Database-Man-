@@ -5,3 +5,18 @@ function ChangePage(page) {
     //We need to prevent this.
     location.href = page;
 }
+
+async function LogOut() {
+    try {
+        const response = await fetch('/api/account/logout', {
+            method: 'GET',
+        });
+        if (response.ok) {
+            ChangePage('/');
+        } else {
+            console.error('Logout failed');
+        }
+    } catch (error) {
+        console.error('Error during logout:', error);
+    }
+}

@@ -1,4 +1,4 @@
-async function login() {
+function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const loginData = {
@@ -7,15 +7,10 @@ async function login() {
         isAdmin: false,
         adminPassword: ""
     };
-    const response = await TryLogin(loginData);
-    DeleteLoginRecord()
-    if (response.loginValid)
-        ChangePage('/home');
-    else
-        alert(response.message);
+    TryLogin(loginData);
 }
 
-async function signUp() {
+function signUp() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const loginData = {
@@ -24,15 +19,10 @@ async function signUp() {
         isAdmin: false,
         adminPassword: ""
     };
-    const response = await TrySignUp(loginData);
-    DeleteCreateRecord()
-    if (response.createValid)
-        ChangePage('/home');
-    else
-        alert(response.message);
+    TrySignUp(loginData);
 }
 
-async function loginAsAdmin() {
+function loginAsAdmin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const adminPass = document.getElementById('adminPassword').value;
@@ -42,15 +32,10 @@ async function loginAsAdmin() {
         isAdmin: true,
         adminPassword: adminPass
     };
-    const response = await TryLogin(loginData);
-    DeleteLoginRecord()
-    if (response.loginValid)
-        ChangePage('/home');
-    else
-        alert(response.message);
+    TryLogin(loginData);
 }
 
-async function signUpAsAdmin() {
+function signUpAsAdmin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const adminPass = document.getElementById('adminPassword').value;
@@ -60,10 +45,39 @@ async function signUpAsAdmin() {
         isAdmin: true,
         adminPassword: adminPass
     };
-    const response = await TrySignUp(loginData);
-    DeleteCreateRecord()
-    if (response.createValid)
-        ChangePage('/home');
-    else
-        alert(response.message);
+    TrySignUp(loginData);
+}
+
+async function TryLogin(loginData) {
+    try {
+        const response = await fetch("/api/account/login", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify(loginData),
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log('Login request sent:', data);
+        if (data.loginValid) ChangePage('/home');
+        else alert(data.message);
+    } catch (error) {
+        console.error('Error during login:', error);
+    }
+}
+
+async function TrySignUp(loginData) {
+    try {
+        const response = await fetch("/api/account/create", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify(loginData),
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log('Account creation request sent:', data);
+        if (data.createValid) ChangePage('/home');
+        else alert(data.message);
+    } catch (error) {
+        console.error('Error creating account:', error);
+    }
 }

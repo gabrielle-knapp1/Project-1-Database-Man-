@@ -1,106 +1,154 @@
-//const account = require('../Modules/account');
 const mysql = require('../mysql');
-const account = require('../Modules/account');
-const adminPassword = 'admin123';
+const universalAdminPassword = 'admin123';
+const crypto = require('crypto');
+
+const hashPassword = password => {
+    return crypto.createHash('sha256').update(password).digest('hex').substring(0, 20);
+};
 
 async function checkLogin(req, res) {
-    let uName = req.body.username;
-    let pass = req.body.password;
-    let admin = req.body.isAdmin;
-    let adminPass = req.body.adminPassword;
-    let newAcct = new account.Account("", "", false);
-    const allAccounts = await mysql.selectQuery("select username, password, isAdmin from vAccounts");
+    const { username, password, isAdmin, adminPassword } = req.body;
+    const rows = await mysql.selectQuery("select username, password, isAdmin from vAccounts where username=?", [username]);
     let response = {
         loginValid: false,
         message: "Username not found"
     };
-    for (let acct of allAccounts) {
-        if (acct.username === uName) {
-            response.message = "Incorrect password";
-            if (acct.password === pass) {
-                if (acct.isAdmin && admin) {
-                    response.message = "Incorrect admin password";
-                    if (adminPass === adminPassword) {
-                        response.loginValid = true;
-                        response.message = "Login successful";
-                        newAcct = acct;
-                    }
-                } else {
+    if (rows.length === 0) {
+        req.session.destroy();
+        return res.send(response);
+    } else if (rows.length = 1) {
+        response.message = "Incorrect password";
+        if (hashPassword(password) === rows[0].password) {
+            if (rows[0].isAdmin && isAdmin) {
+                response.message = "Incorrect admin password";
+                if (adminPassword === universalAdminPassword) {
                     response.loginValid = true;
                     response.message = "Login successful";
-                    newAcct = acct;
-                }
+                    req.session.username = rows[0].username;
+                } else req.session.destroy();
+            } else {
+                response.loginValid = true;
+                response.message = "Login successful";
+                req.session.username = rows[0].username;
             }
-            break;
-        }
+        } else req.session.destroy();
     }
-    account.setCurrAccount(newAcct);
     res.send(response);
 }
 
 async function checkCreateAccount(req, res) {
-    let uName = req.body.username;
-    let pass = req.body.password;
-    let admin = req.body.isAdmin;
-    let adminPass = req.body.adminPassword;
+    const { username, password, isAdmin, adminPassword } = req.body;
     let response = {
         createValid: false,
         message: ""
     };
-    if (uName === "" || pass === "" || (admin && adminPass === "")) {
+    if (username === "" || password === "" || (isAdmin && adminPassword === "")) {
         response.message = "Field cannot be empty";
+        req.session.destroy();
         res.send(response);
         return;
     }
-    const allAccounts = await mysql.selectQuery("select username, password, isAdmin from vAccounts");
-    for (let acct of allAccounts) {
-        if (acct.username === uName) {
-            response.message = "Username already exists";
-            res.send(response);
-            return;
-        }
+    const rows = await mysql.selectQuery("select username, password, isAdmin from vAccounts where username=?", [username]);
+    if (rows.length > 0) {
+        response.message = "Username already exists";
+        req.session.destroy();
+        res.send(response);
+        return;
     }
-    if (admin && adminPass !== adminPassword) {
+    if (isAdmin && adminPassword !== universalAdminPassword) {
         response.message = "Incorrect admin password";
-            res.send(response);
-            return;
+        req.session.destroy();
+        res.send(response);
+        return;
     }
     response.createValid = true;
     response.message = "Account created";
-    mysql.insertQuery("insert into vAccounts(username, password, isAdmin) values ?", [[uName, pass, admin]]);
-    account.setCurrAccount(new account.Account(uName, pass, admin));
+    req.session.username = username;
+    mysql.insertQuery("insert into vAccounts(username, password, isAdmin) values (?, ?, ?)", [username, hashPassword(password), isAdmin]);
     res.send(response);
 }
 
-async function deleteAccount(req, res) {
-    let uName = req.params.id;
-    let deletedAcct = await mysql.selectQuery(`select username from vAccounts where username=${uName}`);//this may return an array with 1 element. To fix just put a [0] on the end
-    mysql.customQuery(`delete from vAccounts where username=${uName}`);
-    res.send(deletedAcct);
+async function getAccount(req, res) {
+    const username = req.session.username;
+    if (!username) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    const rows = await mysql.selectQuery("select username, firstName, lastName, DOB from account where username=?", [username]);
+    if (rows.length === 1) {
+        res.send({ success: true, account: rows[0]});
+    } else {
+        res.send({ success: false });
+    }
 }
 
 function updateAccount(req, res) {
-    let field = req.body.field;
-    let newValue = req.body.newValue;
-    let currAcct = account.getCurrAccount();
-    currAcct[field] = newValue;
-    mysql.customQuery(`update vAccounts set ${field}=${value} where username=${currAcct.username}`);
-    account.setCurrAccount(currAcct);
-    res.send(currAcct);
+    try {
+        const { username, password, isAdmin, firstName, lastName, address, email, ogUsername } = req.body;
+        let sql = "update account set ";
+        let values = [];
+        let changed = false;
+        if (username !== '') {
+            sql += "username=?, ";
+            values.push(username);
+            req.session.username = username;
+            changed = true;
+        }
+        if (password !== '') {
+            sql += "password=?, ";
+            values.push(hashPassword(password));
+            changed = true;
+        }
+        if (isAdmin !== '') {
+            sql += "isAdmin=?, ";
+            values.push(isAdmin);
+            changed = true;
+        }
+        if (firstName !== '') {
+            sql += "firstName=?, ";
+            values.push(firstName);
+            changed = true;
+        }
+        if (lastName !== '') {
+            sql += "lastName=? ";
+            values.push(lastName);
+            changed = true;
+        }
+        if (address !== '') {
+            sql += "address=? ";
+            values.push(address);
+            changed = true;
+        }
+        if (email !== '') {
+            sql += "email=? ";
+            values.push(email);
+            changed = true;
+        }
+        if (!changed)
+            return res.send({ success: false, message: "You must change at least one field." });
+        sql = sql.slice(0, -2);
+        sql += " where username=?";
+        values.push(ogUsername);
+        mysql.insertQuery(sql, values)
+        res.send({ success: true, message: "Account updated" });
+    } catch {
+        res.send({ success: false, message: "Unkown error" });
+    }
 }
 
-function deleteRecord(req, res) {
-    try {
-        res.status(204).send(); // Respond with 204 (No Content) on successful deletion
-    } catch {
-        res.status(404).send({error: 'Record not found'});
-    }
+async function deleteAccount(req, res) {
+    //to be implemented
+}
+
+function logout(req, res) {
+    req.session.destroy();
+    res.send("Your are logged out ");
 }
 
 module.exports = {
     checkLogin,
     checkCreateAccount,
-    deleteAccount,
+    getAccount,
     updateAccount,
-    deleteRecord
+    deleteAccount,
+    logout
 };
