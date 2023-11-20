@@ -80,3 +80,21 @@ async function DeleteAccount() {
         alert('An error occurred while deleting your account');
     }
 }
+
+async function GoHome() {
+    try {
+        const response = await fetch('/api/account/session', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        console.log(response);
+        const data = await response.json();
+        console.log(data);
+        if (data.session.isAdmin) ChangePage("/adminHome");
+        else ChangePage("/home");
+    } catch (error) {
+        console.error('Failed to get session info:', error);
+        alert('Failed to get session info');
+    }
+}

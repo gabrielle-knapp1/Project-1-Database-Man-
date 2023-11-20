@@ -25,11 +25,13 @@ async function checkLogin(req, res) {
                     response.loginValid = true;
                     response.message = "Login successful";
                     req.session.username = rows[0].username;
+                    req.session.isAdmin = isAdmin;
                 } else req.session.destroy();
             } else {
                 response.loginValid = true;
                 response.message = "Login successful";
                 req.session.username = rows[0].username;
+                req.session.isAdmin = isAdmin;
             }
         } else req.session.destroy();
     }
@@ -64,6 +66,7 @@ async function checkCreateAccount(req, res) {
     response.createValid = true;
     response.message = "Account created";
     req.session.username = username;
+    req.session.isAdmin = isAdmin;
     mysql.insertQuery("insert into vAccounts(username, password, isAdmin) values (?, ?, ?)", [username, hashPassword(password), isAdmin]);
     res.send(response);
 }
@@ -156,6 +159,10 @@ function logout(req, res) {
     res.send({message: "Your are logged out"});
 }
 
+function getSession(req, res) {
+    res.send({session: req.session});
+}
+
 module.exports = {
     checkLogin,
     checkCreateAccount,
@@ -163,5 +170,6 @@ module.exports = {
     updateAccount,
     deleteCurrentAccount,
     deleteUserAccount,
-    logout
+    logout,
+    getSession
 };
