@@ -11,7 +11,7 @@
 <body>
 
     <ul>
-        <li><a href="adminHome.html">Go Home</a></li>
+        <li><button type="button" onclick="ChangePage('/adminHome')">Go Home</button></li>
     </ul>
 
     <h2><button onclick="addItem()">Add Item!</button></h2>
@@ -27,6 +27,8 @@
             </tr>
         </thead>
         <tbody>
+            <!--To be populated on page load-->
+            <!--NOTE: look at adminLog.js to see how to dynamically add rows from the database-->
             <tr>
                 <td><button onclick="openModal(0)">0</button></td>
                 <td>Baby Doll</td>
