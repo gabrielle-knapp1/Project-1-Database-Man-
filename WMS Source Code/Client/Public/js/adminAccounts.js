@@ -11,8 +11,10 @@ function ConfirmDeleteAccount(username) {
 
 async function DeleteAccount(username) {
     try {
-        const response = await fetch('/api/account/' + username, {
-            method: 'DELETE'
+        const response = await fetch('/api/account/delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({username})
         });
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();

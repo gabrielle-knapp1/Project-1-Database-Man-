@@ -144,10 +144,13 @@ function deleteCurrentAccount(req, res) {//to delete your own account
     }
 }
 
-function deleteUserAccount(req, res) {//for admins to delete other user's accounts
+async function deleteUserAccount(req, res) {//for admins to delete other user's accounts
     try {
-        const username = req.params.id;
+        const username = req.body.username;
         mysql.insertQuery("delete from vAccounts where username=?", [username]);
+        const rows = mysql.selectQuery("select max(logID) from vAdminLog", []);
+        let maxID = rows[0].logID;
+        mysql.insertQuery("insert into vAdminLog(logID, adminUsername, description, timeStamp) values (?, ?, ?, NOW())", [maxID + 1, req.session.username, `Deleted Account: ${username}`])
         res.send({success: true, message: "Account deleted"});
     } catch {
         res.send({success: true, message: "Error during account deletion"});
