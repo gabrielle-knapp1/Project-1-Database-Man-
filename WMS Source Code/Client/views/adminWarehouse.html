@@ -8,13 +8,13 @@
         <link rel="stylesheet" href="./css/global.css">
         <link rel="stylesheet" href="./css/adminWarehouse.css">
     </head>
-    <body>
-      <body>
+<body>
 
     <ul>
-        <li><button type="button" onclick="ChangePage('/adminHome')">Go Home</button></li>
+        <li><a href="adminHome.html">Go Home</a></li>
     </ul>
-    
+
+    <h2><button onclick="addItem()">Add Item!</button></h2>
     <h2>Warehouse Items:</h2>
     <table>
         <thead>
@@ -23,6 +23,7 @@
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -31,59 +32,32 @@
                 <td>Baby Doll</td>
                 <td>1</td>
                 <td>$200.00</td>
-                <td><button>Add to Favorites</button></td>
-                <td><button>Add to Carts</button></td>
+                <td>
+                    <button onclick="editItem(0)">Edit Item</button>
+                    <button onclick="removeItem(this)">Remove Item</button>
+                </td>
             </tr>
             <tr>
                 <td><button onclick="openModal(1)">1</button></td>
                 <td>Again</td>
                 <td>2</td>
                 <td>$300.00</td>
-                <td><button>Add to Favorites</button></td>
-                <td><button>Add to Carts</button></td>
+                <td>
+                    <button onclick="editItem(1)">Edit Item</button>
+                    <button onclick="removeItem(this)">Remove Item</button>
+                </td>
             </tr>
             <tr>
                 <td><button onclick="openModal(2)">2</button></td>
                 <td>Once</td>
                 <td>11</td>
                 <td>$500.00</td>
-                <td><button>Add to Favorites</button></td>
-                <td><button>Add to Carts</button></td>
+                <td>
+                    <button onclick="editItem(2)">Edit Item</button>
+                    <button onclick="removeItem(this)">Remove Item</button>
+                </td>
             </tr>
-        </tr>
-        <tr>
-            <td><button onclick="openModal(3)">3</button></td>
-            <td>Again</td>
-            <td>2</td>
-            <td>$300.00</td>
-            <td><button>Add to Favorites</button></td>
-            <td><button>Add to Carts</button></td>
-        </tr>
-        <tr>
-            <td><button onclick="openModal(4)">4</button></td>
-            <td>Once</td>
-            <td>11</td>
-            <td>$500.00</td>
-            <td><button>Add to Favorites</button></td>
-            <td><button>Add to Carts</button></td>
-        </tr>
-    </tr>
-    <tr>
-        <td><button onclick="openModal(5)">5</button></td>
-        <td>Again</td>
-        <td>2</td>
-        <td>$300.00</td>
-        <td><button>Add to Favorites</button></td>
-        <td><button>Add to Carts</button></td>
-    </tr>
-    <tr>
-        <td><button onclick="openModal(6)">6</button></td>
-        <td>Once</td>
-        <td>11</td>
-        <td>$500.00</td>
-        <td><button>Add to Favorites</button></td>
-        <td><button>Add to Carts</button></td>
-    </tr>
+            <!-- Additional rows can be added dynamically here -->
         </tbody>
     </table>
     <div class="modal" id="myModal">
@@ -92,7 +66,6 @@
             <p id="modalContent"></p>
         </div>
     </div>
-    
 </body>
 
 </html>
