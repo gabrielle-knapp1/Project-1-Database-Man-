@@ -89,6 +89,7 @@ async function updateAdminLogDescription(logID, description) {
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log(data);
+        if (data.success) location.reload();
     } catch (error) {
         console.error('Error updating admin log:', error);
         alert('An error occurred while updating the admin log');
