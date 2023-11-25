@@ -20,3 +20,20 @@ async function LogOut() {
         console.error('Error during logout:', error);
     }
 }
+
+function UTC_EST(inputDate) {
+    const dateObject = new Date(inputDate);
+
+    // Format the date in Eastern Standard Time (EST)
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObject.getDate()).padStart(2, '0');
+    const hours = String(dateObject.getHours()).padStart(2, '0');
+    const minutes = String(dateObject.getMinutes()).padStart(2, '0');
+    const seconds = String(dateObject.getSeconds()).padStart(2, '0');
+
+    // Format the date in 'YYYY-MM-DD HH:mm:ss' in Eastern Standard Time (EST)
+    const estFormattedDatetime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    return estFormattedDatetime;
+}

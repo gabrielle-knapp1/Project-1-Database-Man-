@@ -17,7 +17,7 @@ connection.connect((error) => {
 
 async function selectQuery(sql, values) {
     return new Promise((resolve, reject) => {
-        connection.query(sql, [values], function (err, result, fields) {
+        connection.query(sql, values, function (err, result, fields) {
             if (err) reject(err);
             console.log("Selected from database");
             resolve(result);

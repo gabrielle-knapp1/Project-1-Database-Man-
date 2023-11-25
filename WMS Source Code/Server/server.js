@@ -67,7 +67,8 @@ app.get('/adminWarehouse', requireLogin, function (req, res) {res.sendFile('admi
 //Controllers
 const accountController = require('./Controllers/accountController');
 const adminLogController = require('./Controllers/adminLogController');
-const warehouseController = require('./Controllers/warehouseController');
+const transactionLogController = require('./Controllers/transactionLogController');
+const cartController = require('./Controllers/cartController');
 
 //routes
 //account
@@ -83,6 +84,10 @@ app.route('/api/accounts').get(accountController.getAccounts);
 //admin log
 app.route('/api/adminLogs').get(adminLogController.GetAdminLogs);
 app.route('/api/adminLog').post(adminLogController.UpdateAdminLog);
-//warehouse
+//transaction log
+app.route('/api/transactionLog').get(transactionLogController.GetUserTransactionLogs);
+app.route('/api/transactionLogs').get(transactionLogController.GetAllTransactionLogs);
+//cart
+app.route('/api/cart').post(cartController.GetUserCart);
 
 app.listen(port, () => {console.log(`Warehouse Management System Website listening on port ${port}`)});
