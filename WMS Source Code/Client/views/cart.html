@@ -17,20 +17,37 @@
         <table>
             <thead>
                 <tr>
-                    <th>Product</th>
+                    <th>Item ID</th>
+                    <th>Item</th>
                     <th>Quantity</th>
-                    <th>Price</th>
+                    <th>Borrowing</th>
+                    <th>Price Per Unit</th>
+                    <th>Total Price</th>
+                    <th>Edit Item</th>
                 </tr>
             </thead>
             <tbody>
                 <!--To be populated on page load-->
                 <!--NOTE: look at adminLog.js to see how to dynamically add rows from the database-->
-                <tr>
-                    <td>Product 1</td>
+                <!--tr>
+                    <td>0</td>
+                    <td>Example0</td>
                     <td>2</td>
+                    <td>false</td>
                     <td>$20.00</td>
-                </tr>
+                    <td>$40.00</td>
+                    <td><button type="button">Edit Item</button></td>
+                </tr-->
             </tbody>
         </table>
+
+        <div id="popup" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="ClosePopup()">&times;</span>
+                <div id="popup-content-placeholder"></div>
+            </div>
+        </div>
+
+        <button type="button">Checkout Cart</button>
     </body>
 </html>

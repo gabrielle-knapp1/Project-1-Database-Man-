@@ -57,7 +57,7 @@ function createButton(clickHandler) {
 
 async function ViewCart(username, checkOutTime) {
     try {
-        const response = await fetch('/api/cart', {
+        const response = await fetch('/api/getUserCart', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({username, checkOutTime})
@@ -78,9 +78,12 @@ async function ViewCart(username, checkOutTime) {
                 row.id = `logEntry${itemRow.itemID}`;
 
                 row.appendChild(document.createElement('td')).textContent = itemRow.itemID;
+                row.appendChild(document.createElement('td')).textContent = itemRow.name;
                 row.appendChild(document.createElement('td')).textContent = itemRow.quantity;
-                row.appendChild(document.createElement('td')).textContent = itemRow.borrowing;
-                row.appendChild(document.createElement('td')).textContent = itemRow.checkedOut;
+                row.appendChild(document.createElement('td')).textContent = itemRow.borrowing == 1;
+                row.appendChild(document.createElement('td')).textContent = itemRow.checkedOut == 1;
+                row.appendChild(document.createElement('td')).textContent = '$' + itemRow.pricePerUnit;
+                row.appendChild(document.createElement('td')).textContent = '$' + itemRow.totalPrice;
 
                 tableBody.appendChild(row);
             });

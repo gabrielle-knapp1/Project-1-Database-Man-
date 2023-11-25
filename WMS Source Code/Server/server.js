@@ -88,6 +88,7 @@ app.route('/api/adminLog').post(adminLogController.UpdateAdminLog);
 app.route('/api/transactionLog').get(transactionLogController.GetUserTransactionLogs);
 app.route('/api/transactionLogs').get(transactionLogController.GetAllTransactionLogs);
 //cart
-app.route('/api/cart').post(cartController.GetUserCart);
+app.route('/api/getUserCart').post(cartController.GetUserCart);
+app.route('/api/getMyCart').post(cartController.GetMyCart);
 
 app.listen(port, () => {console.log(`Warehouse Management System Website listening on port ${port}`)});
