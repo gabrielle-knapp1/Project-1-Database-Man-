@@ -63,7 +63,7 @@ function acceptRequest(log, descriptionCell) {
     const { username, itemName } = parseDescription(log.description);
     const newDescription = `${username}'s Request to Borrow Item: ${itemName} was Accepted`;
     descriptionCell.textContent = newDescription;
-    updateAdminLogDescription(log.logID, newDescription);
+    updateAdminLogDescription(log.logID, newDescription, true);
 }
 
 function denyRequest(log, descriptionCell) {
@@ -71,7 +71,7 @@ function denyRequest(log, descriptionCell) {
     const { username, itemName } = parseDescription(log.description);
     const newDescription = `${username}'s Request to Borrow Item: ${itemName} was Denied`;
     descriptionCell.textContent = newDescription;
-    updateAdminLogDescription(log.logID, newDescription);
+    updateAdminLogDescription(log.logID, newDescription, false);
 }
 
 function parseDescription(description) {
@@ -79,12 +79,12 @@ function parseDescription(description) {
     return match ? { username: match[1], itemName: match[2] } : { username: '', itemName: '' };
 }
 
-async function updateAdminLogDescription(logID, description) {
+async function updateAdminLogDescription(logID, description, accepted) {
     try {
         const response = await fetch('/api/adminLog', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({logID, description})
+            body: JSON.stringify({logID, description, accepted})
         });
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();

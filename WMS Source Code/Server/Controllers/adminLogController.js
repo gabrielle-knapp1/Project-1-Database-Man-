@@ -6,7 +6,8 @@ async function GetAdminLogs(req, res) {
 }
 
 function UpdateAdminLog(req, res) {
-    mysql.insertQuery("update vAdminLog set description=?, timeStamp=NOW() where logID=?", [req.body.description, req.body.logID]);
+    mysql.insertQuery("update vAdminLog set description=?, timeStamp=now() where logID=?", [req.body.description, req.body.logID]);
+    mysql.insertQuery("update vTransactionLog set expectedDeliveryTime=now()+interval 3 day, borrowReturnTime=now()+interval 33 day, borrowState=? where transactionID=(select transactionId from vAdminLog where logID=?)", [req.body.accepted? 'accepted' : 'rejected', req.body.logID]);
     res.send({success: true});
 }
 
