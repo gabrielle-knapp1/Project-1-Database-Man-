@@ -69,6 +69,7 @@ const accountController = require('./Controllers/accountController');
 const adminLogController = require('./Controllers/adminLogController');
 const transactionLogController = require('./Controllers/transactionLogController');
 const cartController = require('./Controllers/cartController');
+const warehouseController = require('./Controllers/warehouseController');
 
 //routes
 //account
@@ -90,5 +91,8 @@ app.route('/api/transactionLogs').get(transactionLogController.GetAllTransaction
 //cart
 app.route('/api/getUserCart').post(cartController.GetUserCart);
 app.route('/api/getMyCart').get(cartController.GetMyCart);
+//warehouse
+app.route('api/favorites').get(warehouseController.GetFavorites);
+app.route('api/warehouse').get(warehouseController.GetWarehouse);
 
 app.listen(port, () => {console.log(`Warehouse Management System Website listening on port ${port}`)});

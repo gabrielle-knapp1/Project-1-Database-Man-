@@ -63,11 +63,6 @@ function ClosePopup(id) {
     popup.style.display = 'none';
 }
 
-function CheckOut() {
-    OpenPopup('checkOutPopup');
-    //Do stuff
-}
-
 function SubmitTransaction() {
     //Do stuff
     ClosePopup('ClosePopup');
