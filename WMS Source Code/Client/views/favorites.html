@@ -1,37 +1,30 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <script src="./js/global.js"></script>
-        <script src="./js/favorites.js"></script>
-        <link rel="stylesheet" href="./css/global.css">
-        <link rel="stylesheet" href="./css/favorites.css">
-        <title>Favorites</title>
-    </head>
-    <body>
-        <ul>
-            <li><button type="button" onclick="ChangePage('/home')">Go Home</button></li>
-        </ul>
-        <h2>Items in Favorites:</h2>
-            <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--To be populated on page load-->
-                <!--NOTE: look at adminLog.js to see how to dynamically add rows from the database-->
-                <tr>
-                    <td>Baby Doll</td>
-                    <td>1</td>
-                    <td>$200.00</td>
-                    <td><button>Remove Favorites</button></td>
-                    <td><button>Add to Cart</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="favorites.css">
+    <title>Browse Favorites!</title>
+</head>
+<body>
+    
+    <ul>
+        <li><a href="home.html">Go Home</a></li>
+    </ul>
+    <h2>Items in Favorites:</h2>
+    
+        <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    
+</body>
 </html>

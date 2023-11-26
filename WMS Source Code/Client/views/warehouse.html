@@ -1,42 +1,34 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <script src="./js/global.js"></script>
-        <script src="./js/warehouse.js"></script>
-        <link rel="stylesheet" href="./css/global.css">
-        <link rel="stylesheet" href="./css/warehouse.css">
-        <title>Warehouse</title>
-    </head>
-    <body>
-        <ul>
-            <li><button type="button" onclick="ChangePage('/home')">Go Home</button></li>
-            <li><button type="button" onclick="ChangePage('/cart')">My Cart</button></li>
-        </ul>
-        <h2>Items in Warehouse:</h2>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="warehouse.css">
+    <title>Browse the Warehouse!</title>
+</head>
+<body>
+    
+    <ul>
+        <li><a href="home.html">Go Home</a></li>
+        <li><a href="cart.html">View Cart</a></li>
+    </ul>
+    <h2>Items in Warehouse:</h2>
+    <!--
+    <?php include("warehouse.php"); ?>
+    -->
+    
         <table>
-            <thead>
-                <tr>
-                    <th>Item ID</th>
-                    <th>Item</th>
-                    <th>Quantity in Stock</th>
-                    <th>Price per Unit</th>
-                    <th>Add to Favorites</th>
-                    <th>Add to Cart</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--To be populated on page load-->
-                <!--NOTE: look at adminLog.js to see how to dynamically add rows from the database-->
-                <tr>
-                    <td>0</td>
-                    <td>Baby Doll</td>
-                    <td>1</td>
-                    <td>$200.00</td>
-                    <td><button>Add to Favorites</button></td>
-                    <td><button>Add to Cart</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </body>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    
+</body>
 </html>
