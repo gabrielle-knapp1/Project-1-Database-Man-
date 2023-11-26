@@ -12,7 +12,7 @@ async function RefreshTable() {
         const data = await response.json();
         console.log(data);
         if (data.success) {
-            // Assume you have an array containing warehouse data
+            // Assume you have an array containing warehouse data called "Items"
             const warehouse = data.Items;
 
             // Get the table body element
@@ -29,8 +29,8 @@ async function RefreshTable() {
                 row.appendChild(document.createElement('td')).textContent = item.type;
                 row.appendChild(document.createElement('td')).textContent = item.name;
                 row.appendChild(document.createElement('td')).textContent = item.providerID;
-                row.appendChild(document.createElement('td')).textContent = log.placeID;
-                row.appendChild(document.createElement('td')).textContent = log.pricePerUnit;
+                row.appendChild(document.createElement('td')).textContent = item.placeID;
+                row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
                 tableBody.appendChild(row);
             });
         }
