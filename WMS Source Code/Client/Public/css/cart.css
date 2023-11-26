@@ -1,0 +1,56 @@
+/* Style for the button */
+.checkout {
+    padding: 10px 15px;
+    background-color: #0074c8;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+  
+.checkout:hover {
+    background-color: #005a9e;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+  
+/* Style for the form inside the modal */
+form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+  
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+  
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+  
+/* Style for buttons inside the form */
+form button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+  
+form button:hover {
+    background-color: #45a049;
+}
+
+p {
+    color: red;
+}

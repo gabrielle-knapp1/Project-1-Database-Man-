@@ -56,7 +56,7 @@ function createButton(clickHandler) {
 
 async function ViewCart(username, checkOutTime) {
     try {
-        const response = await fetch('/api/getUserCart', {
+        const response = await fetch('/api/userCart', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({username, checkOutTime})

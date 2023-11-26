@@ -14,7 +14,10 @@ async function GetMyCart(req, res) {
     res.send({ success: true, rows: cart });
 }
 
+async function Purchase(req, res) {}
+
 module.exports = {
     GetUserCart,
-    GetMyCart
+    GetMyCart,
+    Purchase
 };

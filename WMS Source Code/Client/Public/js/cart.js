@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function RefreshCart() {
     try {
-        const response = await fetch('/api/getMyCart', {
+        const response = await fetch('/api/myCart', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -63,7 +63,44 @@ function ClosePopup(id) {
     popup.style.display = 'none';
 }
 
-function SubmitTransaction() {
-    //Do stuff
-    ClosePopup('ClosePopup');
+async function UseAccountInfo() {
+    //use the first name, last name, etc from the user's account to fill in the input fields
+    //if the field is null then leave the input field blank
+    try {
+        const response = await fetch('/api/account', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        if (data.success) {
+            document.getElementById('firstNameInput').value = (data.account.firstName != null || data.account.firstName !== "")? data.account.firstName : "";
+            document.getElementById('lastNameInput').value = (data.account.lastName != null || data.account.lastName !== "")? data.account.lastName : "";
+            document.getElementById('addressInput').value = (data.account.address != null || data.account.address !== "")? data.account.address : "";
+            document.getElementById('emailInput').value = (data.account.email != null || data.account.email !== "")? data.account.email : "";
+        } else {
+            console.error('Failed to get account info');
+            alert('Failed to get account info');
+        }
+    } catch (error) {
+        console.error('Failed to get account info:', error);
+        alert('Failed to get account info');
+    }
+}
+
+async function SubmitTransaction() {
+    const firstName = document.getElementById('firstNameInput').value;
+    const lastName = document.getElementById('lastNameInput').value;
+    const address = document.getElementById('addressInput').value;
+    const email = document.getElementById('emailInput').value;
+    const creditCardNumber = document.getElementById('creditCardNumberInput').value;
+
+    if (firstName != null && firstName !== "" && lastName != null && lastName !== "" && address != null && address !== "" && email != null && email !== "" && creditCardNumber != null && creditCardNumber !== "") {
+        document.getElementById('warning').innerHTML = "";
+        //update the database here
+        ClosePopup('checkOutPopup');
+        location.reload();
+    } else {
+        document.getElementById('warning').innerHTML = "All fields must be filled";
+    }
 }

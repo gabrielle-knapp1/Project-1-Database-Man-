@@ -89,8 +89,9 @@ app.route('/api/adminLog').post(adminLogController.UpdateAdminLog);
 app.route('/api/transactionLog').get(transactionLogController.GetUserTransactionLogs);
 app.route('/api/transactionLogs').get(transactionLogController.GetAllTransactionLogs);
 //cart
-app.route('/api/getUserCart').post(cartController.GetUserCart);
-app.route('/api/getMyCart').get(cartController.GetMyCart);
+app.route('/api/userCart').post(cartController.GetUserCart);
+app.route('/api/myCart').get(cartController.GetMyCart);
+app.route('/api/purchase').post(cartController.Purchase)
 //warehouse
 app.route('api/favorites').get(warehouseController.GetFavorites);
 app.route('api/warehouse').get(warehouseController.GetWarehouse);
