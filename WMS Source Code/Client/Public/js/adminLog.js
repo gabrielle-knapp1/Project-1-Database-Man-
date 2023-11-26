@@ -12,13 +12,13 @@ async function RefreshTable() {
         const data = await response.json();
         console.log(data);
         if (data.success) {
-            // Assume you have an array containing account data
+            // Assume you have an array containing log data
             const adminLogs = data.logs;
 
             // Get the table body element
             const tableBody = document.querySelector('tbody');
 
-            // Populate the table with account data
+            // Populate the table with log data
             adminLogs.forEach(log => {
                 const row = document.createElement('tr');
                 row.id = `logEntry${log.logID}`;

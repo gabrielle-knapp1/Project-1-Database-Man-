@@ -12,13 +12,13 @@ async function RefreshTable() {
         const data = await response.json();
         console.log(data);
         if (data.success) {
-            // Assume you have an array containing account data
+            // Assume you have an array containing log data
             const transactionLogs = data.logs;
 
             // Get the table body element
             const tableBody = document.getElementById('transactions')
 
-            // Populate the table with account data
+            // Populate the table with log data
             transactionLogs.forEach(log => {
                 const row = document.createElement('tr');
                 row.id = `logEntry${log.transactionID}`;
@@ -69,10 +69,10 @@ async function ViewCart(username, checkOutTime) {
         const tableBody = document.getElementById('items');
         tableBody.innerHTML = '';
         if (data.success) {
-            // Assume you have an array containing account data
+            // Assume you have an array containing cart data
             const items = data.rows;
 
-            // Populate the table with account data
+            // Populate the table with cart data
             items.forEach(itemRow => {
                 const row = document.createElement('tr');
                 row.id = `logEntry${itemRow.itemID}`;

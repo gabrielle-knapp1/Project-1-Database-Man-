@@ -17,22 +17,41 @@
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Checkout Time</th>
+                    <th>Expected Delivery</th>
+                    <th>Return Borrowed Item By</th>
+                    <th>Borrow State</th>
+                    <th>Total Cost</th>
+                    <th>Items</th>
                 </tr>
             </thead>
-            <tbody>
-                <!--To be populated on page load-->
-                <!--NOTE: look at adminLog.js to see how to dynamically add rows from the database-->
-                <tr>
-                    <td>3/3/04</td>
-                    <td>Baby Doll</td>
-                    <td>1</td>
-                    <td>$200.00</td>
-                </tr>
+            <tbody id="transactions">
             </tbody>
         </table>
+
+        <div id="popup" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <div id="popup-content-placeholder"></div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Borrowing</th>
+                            <th>Checked Out</th>
+                            <th>Price Per Unit</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="items">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
     </body>
 </html>

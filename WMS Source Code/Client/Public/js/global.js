@@ -21,6 +21,7 @@ async function LogOut() {
     }
 }
 
+//converts from a UTC string to an EST string
 function UTC_EST(inputDate) {
     const dateObject = new Date(inputDate);
 

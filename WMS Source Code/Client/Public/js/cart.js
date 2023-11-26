@@ -12,13 +12,13 @@ async function RefreshCart() {
         const data = await response.json();
         console.log(data);
         if (data.success) {
-            // Assume you have an array containing account data
-            const cart = data.cart;
+            // Assume you have an array containing cart data
+            const cart = data.rows;
 
             // Get the table body element
             const tableBody = document.querySelector('tbody');
 
-            // Populate the table with account data
+            // Populate the table with cart data
             cart.forEach(itemRow => {
                 const row = document.createElement('tr');
                 row.id = `logEntry${itemRow.itemID}`;
@@ -62,3 +62,9 @@ function ClosePopup() {
     const popup = document.getElementById('popup');
     popup.style.display = 'none';
 }
+
+function CheckOut() {
+    //maybe open a popup to enter a credit card number
+}
+
+function SubmitTransaction() {}
