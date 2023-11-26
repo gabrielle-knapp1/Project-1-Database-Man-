@@ -30,13 +30,21 @@
             </tbody>
         </table>
 
-        <div id="popup" class="modal">
+        <div id="editItemPopup" class="modal">
             <div class="modal-content">
-                <span class="close" onclick="ClosePopup()">&times;</span>
+                <span class="close" onclick="ClosePopup('editItemPopup')">&times;</span>
                 <div id="popup-content-placeholder"></div>
             </div>
         </div>
 
         <button type="button" onclick="CheckOut()">Checkout Cart</button>
+
+        <div id="checkOutPopup" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="ClosePopup('checkOutPopup')">&times;</span>
+                <div id="popup-content-placeholder"></div>
+            </div>
+        </div>
+
     </body>
 </html>

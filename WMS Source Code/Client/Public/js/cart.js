@@ -31,7 +31,7 @@ async function RefreshCart() {
                 row.appendChild(document.createElement('td')).textContent = '$' + itemRow.totalPrice;
 
                 const buttonCell = document.createElement('td');
-                const editButton = createButton(() => OpenPopup());
+                const editButton = createButton(() => OpenPopup("editItemPopup"));
                 buttonCell.appendChild(editButton);
                 row.appendChild(buttonCell);
 
@@ -53,18 +53,22 @@ function createButton(clickHandler) {
     return button;
 }
 
-function OpenPopup() {
-    const popup = document.getElementById('popup');
+function OpenPopup(id) {
+    const popup = document.getElementById(id);
     popup.style.display = 'block';
 }
 
-function ClosePopup() {
-    const popup = document.getElementById('popup');
+function ClosePopup(id) {
+    const popup = document.getElementById(id);
     popup.style.display = 'none';
 }
 
 function CheckOut() {
-    //maybe open a popup to enter a credit card number
+    OpenPopup('checkOutPopup');
+    //Do stuff
 }
 
-function SubmitTransaction() {}
+function SubmitTransaction() {
+    //Do stuff
+    ClosePopup('ClosePopup');
+}
