@@ -13,7 +13,7 @@ async function RefreshTable() {
         console.log(data);
         if (data.success) {
             // Assume you have an array containing favorites data called "Favorites"
-            const favorites = data.Favorites;
+            const favorites = data.items;
 
             // Get the table body element
             const tableBody = document.querySelector('tbody');
