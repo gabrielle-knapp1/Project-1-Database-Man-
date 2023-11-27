@@ -2,6 +2,8 @@ const mysql = require('../mysql');
 
 function GetFavorites(req, res) {
     //select all items from the favorites table where the username matches the session username
+    const rows = await mysql.selectQuery("select favoriteID, username, itemID from vFavorites", []);
+    res.send({ success: true, items: rows })
 }
 
 function AddFavorite(req, res) {
