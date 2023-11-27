@@ -36,3 +36,27 @@ async function RefreshTable() {
         alert('An error occurred while fetching favorites data');
     }
 }
+async function removeItem(){
+//Here I'll need to remove the item from the favorites table in the database
+const favoriteID = parseInt(document.getElementById('favoriteID').dataset.info);
+try {
+    const response = await fetch('/api/favorites/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({favoriteID})
+    });
+    if (!response.ok) {throw new Error('Network response was not ok');}
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
+        location.reload();
+    }
+} catch (error) {
+    console.error('Error removing item from favorites:', error);
+    alert('An error occurred while removing item from favorites');
+}
+}
+
+function addCart(){
+    //Here I'll need to add this to the cart table in the database
+}
