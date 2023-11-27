@@ -1,11 +1,3 @@
-/**
- * If this all works then you can keep it as it is,
- * but if you look at some of the other files like adminLog.js, adminTransactionLog.js, or cart.js
- * you can see how to get the data from the database and properly add rows to the table.
- * 
- * I've also added the css for pop-ups to the global.css file.
- * You can see how I added pop-ups if you look at adminTransactionLog.html and adminTransactionLog.js.
- */
 document.addEventListener('DOMContentLoaded', () => {
     RefreshTable();
 });
@@ -31,7 +23,7 @@ async function RefreshTable() {
                 const row = document.createElement('tr');
                 row.id = `itemEntry${item.itemID}`;
 
-                const descriptionCell = document.createElement('td');
+                //const descriptionCell = document.createElement('td');
 
                 row.appendChild(document.createElement('td')).textContent = item.itemID;
                 row.appendChild(document.createElement('td')).textContent = item.type;
@@ -39,6 +31,11 @@ async function RefreshTable() {
                 row.appendChild(document.createElement('td')).textContent = item.providerID;
                 row.appendChild(document.createElement('td')).textContent = item.placeID;
                 row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
+
+                /**
+                 * Don't forget to create the button to edit this item
+                 */
+
                 tableBody.appendChild(row);
             });
         }
@@ -48,6 +45,13 @@ async function RefreshTable() {
     }
 }
 
+/**
+ * All of the functions below do not update the database, they just change the html code, which isn't sufficient.
+ * When you add/edit/remove an item, it should simply be inserted/updated/deleted in the database, then all you need to do is refresh the page.
+ * See warehouseController.js and cartController.js
+ */
+
+/**@deprecated*/
 function addItem() {
     // Add fake item data
     var fakeItem = {
@@ -70,6 +74,7 @@ function addItem() {
                         </td>`;
 }
 
+/**@deprecated*/
 function openModal(id) {
     var modal = document.getElementById("myModal");
     var modalContent = document.getElementById("modalContent");
@@ -80,11 +85,13 @@ function openModal(id) {
     modal.style.display = "block";
 }
 
+/**@deprecated*/
 function closeModal() {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
 }
 
+/**@deprecated*/
 function editItem(id) {
     var table = document.querySelector('table tbody');
     var rows = table.getElementsByTagName('tr');
@@ -97,6 +104,7 @@ function editItem(id) {
     }
 }
 
+/**@deprecated*/
 function makeRowEditable(row) {
     var cells = row.getElementsByTagName('td');
     var originalRowHTML = row.innerHTML;
@@ -116,6 +124,7 @@ function makeRowEditable(row) {
 <button onclick="cancelEdit(this, '${originalRowHTML}')">Cancel</button>`;
 }
 
+/**@deprecated*/
 function saveChanges(button) {
     var row = button.parentNode.parentNode;
     var cells = row.getElementsByTagName('td');
@@ -132,11 +141,13 @@ function saveChanges(button) {
 <button onclick="removeItem(this)">Remove Item</button>`;
 }
 
+/**@deprecated*/
 function cancelEdit(button, originalRowHTML) {
     var row = button.parentNode.parentNode;
     row.innerHTML = originalRowHTML;
 }
 
+/**@deprecated*/
 function removeItem(button) {
     var row = button.parentNode.parentNode;
     row.parentNode.removeChild(row);

@@ -23,7 +23,7 @@ async function RefreshTable() {
                 const row = document.createElement('tr');
                 row.id = `itemEntry${item.itemID}`;
 
-                const descriptionCell = document.createElement('td');
+                //const descriptionCell = document.createElement('td');
 
                 row.appendChild(document.createElement('td')).textContent = item.itemID;
                 row.appendChild(document.createElement('td')).textContent = item.type;
@@ -31,6 +31,12 @@ async function RefreshTable() {
                 row.appendChild(document.createElement('td')).textContent = item.providerID;
                 row.appendChild(document.createElement('td')).textContent = item.placeID;
                 row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
+
+                /**
+                 * Don't forget to create the buttons to add this item to the cart and to add this item as a favorite
+                 * See warehouseController.js and cartController.js
+                 */
+
                 tableBody.appendChild(row);
             });
         }

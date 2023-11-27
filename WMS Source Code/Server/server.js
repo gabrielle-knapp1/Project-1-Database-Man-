@@ -91,9 +91,14 @@ app.route('/api/transactionLogs').get(transactionLogController.GetAllTransaction
 //cart
 app.route('/api/userCart').post(cartController.GetUserCart);
 app.route('/api/myCart').get(cartController.GetMyCart);
-app.route('/api/purchase').post(cartController.Purchase)
+app.route('/api/cart/purchase').post(cartController.Purchase)
+app.route('/api/cart/add').post(cartController.AddToCart);
+app.route('/api/cart/delete').post(cartController.DeleteFromCart);
+app.route('/api/cart/changeQuantity').post(cartController.ChangeQuantity);
 //warehouse
-app.route('api/favorites').get(warehouseController.GetFavorites);
-app.route('api/warehouse').get(warehouseController.GetWarehouse);
+app.route('/api/favorites').get(warehouseController.GetFavorites);
+app.route('/api/favorites/add').post(warehouseController.AddFavorite);
+app.route('/api/favorites/remove').post(warehouseController.RemoveFavorite);
+app.route('/api/warehouse').get(warehouseController.GetWarehouse);
 
 app.listen(port, () => {console.log(`Warehouse Management System Website listening on port ${port}`)});

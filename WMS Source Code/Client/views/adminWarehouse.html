@@ -8,33 +8,33 @@
         <link rel="stylesheet" href="./css/global.css">
         <link rel="stylesheet" href="./css/adminWarehouse.css">
     </head>
-<body>
+    <body>
 
-    <ul>
-        <li><button type="button" onclick="ChangePage('/adminHome')">Go Home</button></li>
-    </ul>
+        <ul>
+            <li><button type="button" onclick="ChangePage('/adminHome')">Go Home</button></li>
+        </ul>
 
-    <h2><button onclick="addItem()">Add Item!</button></h2>
-    <h2>Warehouse Items:</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Item ID</th>
-                <th>Item</th>
-                <th>Quantity in Stock</th>
-                <th>Price per Unit</th>
-                <th>Edit Item</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <div class="modal" id="myModal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p id="modalContent"></p>
+        <h2><button onclick="addItem()">Add Item!</button></h2>
+        <h2>Warehouse Items:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Item</th>
+                    <th>Quantity in Stock</th>
+                    <th>Price per Unit</th>
+                    <th>Edit Item</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="modal" id="myModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p id="modalContent"></p>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>

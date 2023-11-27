@@ -31,7 +31,7 @@ async function RefreshCart() {
                 row.appendChild(document.createElement('td')).textContent = '$' + itemRow.totalPrice;
 
                 const buttonCell = document.createElement('td');
-                const editButton = createButton(() => OpenPopup("editItemPopup"));
+                const editButton = createButton(() => OpenEditItemPopup(itemRow.itemID));
                 buttonCell.appendChild(editButton);
                 row.appendChild(buttonCell);
 
@@ -53,14 +53,63 @@ function createButton(clickHandler) {
     return button;
 }
 
-function OpenPopup(id) {
-    const popup = document.getElementById(id);
+function OpenEditItemPopup(itemID) {
+    const popup = document.getElementById('editItemPopup');
+    document.getElementById('itemID').dataset.info = '' + itemID;
+    popup.style.display = 'block';
+}
+
+function OpenCheckOutPopup() {
+    const popup = document.getElementById('checkOutPopup');
     popup.style.display = 'block';
 }
 
 function ClosePopup(id) {
     const popup = document.getElementById(id);
     popup.style.display = 'none';
+}
+
+async function RemoveFromCart() {
+    const itemID = parseInt(document.getElementById('itemID').dataset.info);
+    try {
+        const response = await fetch('/api/cart/delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({itemID})
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log(data);
+        if (data.success) {
+            ClosePopup('editItemPopup');
+            location.reload();
+        }
+    } catch (error) {
+        console.error('Error removing item from cart:', error);
+        alert('An error occurred while removing item from cart');
+    }
+}
+
+async function SetQuantity() {
+    const itemID = parseInt(document.getElementById('itemID').dataset.info);
+    const newQuantity = parseInt(document.getElementById('changeQuantityInput').value);
+    try {
+        const response = await fetch('/api/cart/changeQuantity', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({itemID, newQuantity})
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log(data);
+        if (data.success) {
+            ClosePopup('editItemPopup');
+            location.reload();
+        }
+    } catch (error) {
+        console.error('Error changing item quantity:', error);
+        alert('An error occurred while changing item quantity');
+    }
 }
 
 async function UseAccountInfo() {
@@ -97,9 +146,24 @@ async function SubmitTransaction() {
 
     if (firstName != null && firstName !== "" && lastName != null && lastName !== "" && address != null && address !== "" && email != null && email !== "" && creditCardNumber != null && creditCardNumber !== "") {
         document.getElementById('warning').innerHTML = "";
-        //update the database here
-        ClosePopup('checkOutPopup');
-        location.reload();
+        try {
+            const response = await fetch('/api/cart/purchase', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({creditCardNumber})
+            });
+            if (!response.ok) {throw new Error('Network response was not ok');}
+            const data = await response.json();
+            console.log(data);
+            if (data.success) {
+                ClosePopup('checkOutPopup');
+                location.reload();
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error('Error making purchase:', error);
+            alert('An error occurred while making a purchase');
+        }
     } else {
         document.getElementById('warning').innerHTML = "All fields must be filled";
     }

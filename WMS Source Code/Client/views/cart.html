@@ -33,16 +33,22 @@
         <div id="editItemPopup" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="ClosePopup('editItemPopup')">&times;</span>
-                <div id="popup-content-placeholder"></div>
+                <div id="editItemPopup-content-placeholder">
+                    <div id="itemID" data-info="-1"></div>
+                    <button type="button" onclick="RemoveFromCart()">Remove From Cart</button>
+                    
+                    <label for="changeQuantity">Quantity:</label>
+                    <input type="text" id="changeQuantityInput" required onsubmit="SetQuantity()">
+                </div>
             </div>
         </div>
 
-        <button type="button" class="checkout" onclick="OpenPopup('checkOutPopup')">Checkout Cart</button>
+        <button type="button" class="checkout" onclick="OpenCheckOutPopup()">Checkout Cart</button>
 
         <div id="checkOutPopup" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="ClosePopup('checkOutPopup')">&times;</span>
-                <div id="popup-content-placeholder">
+                <div id="checkOutPopup-content-placeholder">
                     <form id="purchaseForm">
                         <button type="button" onclick="UseAccountInfo()">Use My Account Info For Purchase</button>
 
