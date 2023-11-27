@@ -23,7 +23,7 @@ async function RefreshTable() {
                 const row = document.createElement('tr');
                 row.id = `itemEntry${item.favoriteID}`;
 
-                const descriptionCell = document.createElement('td');
+                //const descriptionCell = document.createElement('td');
 
                 row.appendChild(document.createElement('td')).textContent = item.favoriteID;
                 row.appendChild(document.createElement('td')).textContent = item.username;
