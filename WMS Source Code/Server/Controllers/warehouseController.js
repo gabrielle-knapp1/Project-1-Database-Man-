@@ -12,6 +12,8 @@ function AddFavorite(req, res) {
 
 function RemoveFavorite(req, res) {
     //use the item in the req.body and delete it from this user's favorites
+    mysql.insertQuery("delete from vFavorites where username=? and itemID=?", [req.session.username, req.body.itemID]);
+    res.send({success: true});
 }
 
 function GetWarehouse(req, res) {
