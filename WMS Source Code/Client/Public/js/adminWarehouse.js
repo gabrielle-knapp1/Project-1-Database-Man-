@@ -34,6 +34,7 @@ async function RefreshTable() {
                 //row.appendChild(createButton("Remove Item", () => removeItem));
                 row.appendChild(createButton("Edit Item", () => editItem(item.itemID)));
                 tableBody.appendChild(row);
+                openModal(item.itemID);
             });
         }
     } catch (error) {
@@ -110,12 +111,13 @@ function openModal(id) {
     modal.style.display = "block";
 }
 
+///**@deprecated*/
 function closeModal() {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
 }
 
-/**@deprecated*/
+///**@deprecated*/
 function editItem(id) {
     var table = document.querySelector('table tbody');
     var rows = table.getElementsByTagName('tr');
