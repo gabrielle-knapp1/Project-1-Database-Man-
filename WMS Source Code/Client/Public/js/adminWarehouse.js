@@ -100,7 +100,6 @@ function addItem() {
                         </td>`;
 }
 
-/**@deprecated*/
 function openModal(id) {
     var modal = document.getElementById("myModal");
     var modalContent = document.getElementById("modalContent");
@@ -111,7 +110,6 @@ function openModal(id) {
     modal.style.display = "block";
 }
 
-/**@deprecated*/
 function closeModal() {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
