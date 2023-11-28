@@ -13,7 +13,7 @@ async function RefreshTable() {
         console.log(data);
         if (data.success) {
             // Assume you have an array containing warehouse data called "Items"
-            const warehouse = data.Items;
+            const warehouse = data.items;
 
             // Get the table body element
             const tableBody = document.querySelector('tbody');
