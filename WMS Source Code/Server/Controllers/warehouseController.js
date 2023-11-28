@@ -22,9 +22,18 @@ async function GetWarehouse(req, res) {
     res.send({ success: true, items: rows });
 }
 
+function AddItem(req, res) {}
+
+function EditItem(req, res) {}
+
+function RemoveItem(req, res) {}
+
 module.exports = {
     GetFavorites,
     AddFavorite,
     RemoveFavorite,
-    GetWarehouse
+    GetWarehouse,
+    AddItem,
+    EditItem,
+    RemoveItem
 };
