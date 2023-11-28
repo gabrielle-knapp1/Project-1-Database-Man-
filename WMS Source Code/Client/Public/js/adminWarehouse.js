@@ -130,7 +130,7 @@ function editItem(id) {
     }
 }
 
-/**@deprecated*/
+///**@deprecated*/
 function makeRowEditable(row) {
     var cells = row.getElementsByTagName('td');
     var originalRowHTML = row.innerHTML;
