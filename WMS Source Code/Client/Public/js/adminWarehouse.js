@@ -31,11 +31,8 @@ async function RefreshTable() {
                 row.appendChild(document.createElement('td')).textContent = item.providerID;
                 row.appendChild(document.createElement('td')).textContent = item.placeID;
                 row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
-
-                /**
-                 * Don't forget to create the button to edit this item
-                 */
-
+                //row.appendChild(createButton("Remove Item", () => removeItem));
+                row.appendChild(createButton("Edit Item", () => editItem(item.itemID)));
                 tableBody.appendChild(row);
             });
         }
@@ -44,7 +41,36 @@ async function RefreshTable() {
         alert('An error occurred while fetching warehouse data');
     }
 }
-
+/* This needs to be created as a thing before we can create the button
+async function removeItem(){
+//Here I'll need to remove the item from the favorites table in the database
+const favoriteID = parseInt(document.getElementById('favoriteID').dataset.info);
+try {
+    const response = await fetch('/api/ware/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({favoriteID})
+    });
+    if (!response.ok) {throw new Error('Network response was not ok');}
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
+        location.reload();
+    }
+} catch (error) {
+    console.error('Error removing item from favorites:', error);
+    alert('An error occurred while removing item from favorites');
+}
+}
+*/
+function createButton(text, clickHandler) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = text;
+    button.classList.add('action-button'); // Add a CSS class for styling
+    button.addEventListener('click', clickHandler);
+    return button;
+}
 /**
  * All of the functions below do not update the database, they just change the html code, which isn't sufficient.
  * When you add/edit/remove an item, it should simply be inserted/updated/deleted in the database, then all you need to do is refresh the page.
