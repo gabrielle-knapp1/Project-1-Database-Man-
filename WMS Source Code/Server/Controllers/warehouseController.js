@@ -18,6 +18,8 @@ function RemoveFavorite(req, res) {
 
 function GetWarehouse(req, res) {
     //select all the items from the warehouse table
+    const rows = await mysql.selectQuery("select itemID, Type, name, providerID, stockQuanity, placeID, pricePerUnit from vItems", []);
+    res.send({ success: true, items: rows })
 }
 
 module.exports = {
