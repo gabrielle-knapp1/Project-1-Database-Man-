@@ -42,7 +42,7 @@ async function removeItem(){
 //Here I'll need to remove the item from the favorites table in the database
 const favoriteID = parseInt(document.getElementById('favoriteID').dataset.info);
 try {
-    const response = await fetch('/api/favorites/delete', {
+    const response = await fetch('/api/favorites/remove', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({favoriteID})
