@@ -26,14 +26,13 @@ function AddItem(req, res) {}
 
 function EditItem(req, res) {
     try {
-        const { itemID, type, name, providerID, stockQuantity, placeID, pricePerUnit } = req.body;
+        const { newItemID, type, name, providerID, stockQuantity, placeID, pricePerUnit, originalItemID } = req.body;
         let sql = "update vItems set ";
         let values = [];
         let changed = false;
-        if (itemID !== '') {
+        if (newItemID !== '') {
             sql += "itemID=?, ";
-            values.push(itemID);
-            req.session.username = itemID;
+            values.push(newItemID);
             changed = true;
         }
         if (type !== '') {
@@ -70,18 +69,16 @@ function EditItem(req, res) {
             return res.send({ success: false, message: "You must change at least one field." });
         sql = sql.slice(0, -2);
         sql += " where itemID=?";
-        mysql.insertQuery(sql, values)
+        mysql.insertQuery(sql, values);
+        values.push(originalItemID);
         res.send({ success: true, message: "Item updated" });
     } catch {
         res.send({ success: false, message: "Unkown error" });
     }
 }
-}
 
 function RemoveItem(req, res) {
     //use the item in the req.body and delete it from the admin warehouse
-    mysql.insertQuery("delete from vItems where itemID=?", [req.session.itemID]);
-    res.send({success: true});
 }
 
 module.exports = {
