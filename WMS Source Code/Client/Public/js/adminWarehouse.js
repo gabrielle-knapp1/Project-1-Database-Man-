@@ -42,12 +42,12 @@ async function RefreshTable() {
     }
 }
 
-async function updateItem(itemID, type, name, providerID, stockQuantity, placeID, pricePerUnit) {
+async function updateItem(newItemID, type, name, providerID, stockQuantity, placeID, pricePerUnit, originalItemID) {
     try {
         const response = await fetch('/api/warehouse/edit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({itemID, type, name, providerID, stockQuantity, placeID, pricePerUnit})
+            body: JSON.stringify({newItemID, type, name, providerID, stockQuantity, placeID, pricePerUnit, originalItemID})
         });
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
@@ -57,6 +57,7 @@ async function updateItem(itemID, type, name, providerID, stockQuantity, placeID
         console.error('Error updating item:', error);
         alert('An error occurred while updating item');
     }
+    console.log('Original Item ID:', originalItemID);
 }
 
 async function removeItem(){
@@ -93,6 +94,9 @@ function makeRowEditable(row) {
     var cells = row.getElementsByTagName('td');
     var originalRowHTML = row.innerHTML;
 
+    // Extract the item ID from the first cell
+    var originalItemID = cells[0].textContent;
+
     for (var i = 1; i < cells.length - 1; i++) {
         var content = cells[i].textContent;
         var input = document.createElement('input');
@@ -101,9 +105,11 @@ function makeRowEditable(row) {
         cells[i].innerHTML = '';
         cells[i].appendChild(input);
     }
+
     var actionsCell = cells[cells.length - 1];
-    actionsCell.innerHTML = '<button onclick="updateItem(this)">Save Changes</button>';
-//<button onclick="cancelEdit(this, '${originalRowHTML}')">Cancel</button>;
+
+    // Pass both original and new item IDs to the updateItem function
+    actionsCell.innerHTML = `<button onclick="updateItem('${originalItemID}', this)">Save Changes</button>`;
 }
 
 /**
