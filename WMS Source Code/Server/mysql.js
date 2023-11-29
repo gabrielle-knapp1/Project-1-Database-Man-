@@ -2,6 +2,7 @@ const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
     host: 'localhost',
+	//make hash so it is not viewable by malicious user
 	user: 'root',
 	password: 'root',
 	database: 'warehouse'
