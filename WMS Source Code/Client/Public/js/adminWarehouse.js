@@ -42,12 +42,12 @@ async function RefreshTable() {
     }
 }
 
-async function updateItem(newItemID, type, name, providerID, stockQuantity, placeID, pricePerUnit, originalItemID) {
+async function updateItem(newItemID, originalItemId, type, name, providerID, stockQuantity, placeID, pricePerUnit) {
     try {
         const response = await fetch('/api/warehouse/edit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({newItemID, type, name, providerID, stockQuantity, placeID, pricePerUnit, originalItemID})
+            body: JSON.stringify({newItemID, originalItemId, type, name, providerID, stockQuantity, placeID, pricePerUnit})
         });
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
