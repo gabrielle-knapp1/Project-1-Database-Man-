@@ -24,7 +24,12 @@ async function GetWarehouse(req, res) {
 
 function AddItem(req, res) {}
 
-function EditItem(req, res) {}
+function EditItem(req, res) {
+    const column = req.body.category;
+    mysql.insertQuery("UPDATE vItems SET ${column} = ? WHERE itemID = ?", [req.body.info, req.body.itemID]);
+    mysql.insertQuery("update vTransactionLog set expectedDeliveryTime=now()+interval 3 day, borrowReturnTime=now()+interval 33 day, borrowState=? where transactionID=(select transactionId from vAdminLog where logID=?)", [req.body.accepted? 'accepted' : 'rejected', req.body.logID]);
+    res.send({success: true});
+}
 
 function RemoveItem(req, res) {
     //use the item in the req.body and delete it from the admin warehouse
