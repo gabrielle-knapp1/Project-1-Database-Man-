@@ -25,10 +25,57 @@ async function GetWarehouse(req, res) {
 function AddItem(req, res) {}
 
 function EditItem(req, res) {
-    const column = req.body.category;
-    mysql.insertQuery("UPDATE vItems SET ${column} = ? WHERE itemID = ?", [req.body.info, req.body.itemID]);
-    mysql.insertQuery("update vTransactionLog set expectedDeliveryTime=now()+interval 3 day, borrowReturnTime=now()+interval 33 day, borrowState=? where transactionID=(select transactionId from vAdminLog where logID=?)", [req.body.accepted? 'accepted' : 'rejected', req.body.logID]);
-    res.send({success: true});
+    try {
+        const { itemID, type, name, providerID, stockQuantity, placeID, pricePerUnit } = req.body;
+        let sql = "update vItems set ";
+        let values = [];
+        let changed = false;
+        if (itemID !== '') {
+            sql += "itemID=?, ";
+            values.push(itemID);
+            req.session.username = itemID;
+            changed = true;
+        }
+        if (type !== '') {
+            sql += "type=?, ";
+            values.push(type);
+            changed = true;
+        }
+        if (name !== '') {
+            sql += "name=?, ";
+            values.push(name);
+            changed = true;
+        }
+        if (providerID !== '') {
+            sql += "providerID=?, ";
+            values.push(providerID);
+            changed = true;
+        }
+        if (stockQuantity !== '') {
+            sql += "stockQuantity=?, ";
+            values.push(stockQuantity);
+            changed = true;
+        }
+        if (placeID !== '') {
+            sql += "placeID=?, ";
+            values.push(placeID);
+            changed = true;
+        }
+         if (pricePerUnit !== '') {
+            sql += "pricePerUnit=?, ";
+            values.push(pricePerUnit);
+            changed = true;
+        }
+        if (!changed)
+            return res.send({ success: false, message: "You must change at least one field." });
+        sql = sql.slice(0, -2);
+        sql += " where itemID=?";
+        mysql.insertQuery(sql, values)
+        res.send({ success: true, message: "Item updated" });
+    } catch {
+        res.send({ success: false, message: "Unkown error" });
+    }
+}
 }
 
 function RemoveItem(req, res) {
