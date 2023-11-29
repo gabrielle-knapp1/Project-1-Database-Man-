@@ -26,7 +26,7 @@ function AddItem(req, res) {}
 
 function EditItem(req, res) {
     try {
-        const {newItemID, originalItemId, type, name, providerID, stockQuantity, placeID, pricePerUnit} = req.body;
+        const {newItemID, originalItemID, type, name, providerID, stockQuantity, placeID, pricePerUnit} = req.body;
         let sql = "update vItems set ";
         let values = [];
         let changed = false;
