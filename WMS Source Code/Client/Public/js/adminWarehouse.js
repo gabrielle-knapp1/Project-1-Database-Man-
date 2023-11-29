@@ -14,7 +14,6 @@ async function RefreshTable() {
         if (data.success) {
             // Assume you have an array containing warehouse data called "Items"
             const warehouse = data.items;
-
             // Get the table body element
             const tableBody = document.querySelector('tbody');
 
@@ -103,7 +102,7 @@ function makeRowEditable(row) {
         cells[i].appendChild(input);
     }
     var actionsCell = cells[cells.length - 1];
-    actionsCell.innerHTML = <button onclick="updateItem(this)">Save Changes</button>;
+    actionsCell.innerHTML = '<button onclick="updateItem(this)">Save Changes</button>';
 //<button onclick="cancelEdit(this, '${originalRowHTML}')">Cancel</button>;
 }
 
