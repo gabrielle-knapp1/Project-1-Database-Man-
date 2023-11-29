@@ -42,15 +42,32 @@ async function RefreshTable() {
         alert('An error occurred while fetching warehouse data');
     }
 }
-/* This needs to be created as a thing before we can create the button
+
+async function updateItem(itemID, type, name, providerID, stockQuantity, placeID, pricePerUnit) {
+    try {
+        const response = await fetch('/api/warehouse/edit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({itemID, type, name, providerID, stockQuantity, placeID, pricePerUnit})
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log(data);
+        if (data.success) location.reload();
+    } catch (error) {
+        console.error('Error updating item:', error);
+        alert('An error occurred while updating item');
+    }
+}
+
 async function removeItem(){
-//Here I'll need to remove the item from the favorites table in the database
-const favoriteID = parseInt(document.getElementById('favoriteID').dataset.info);
+//Here I'll need to remove the item from the items table in the database
+const itemID = parseInt(document.getElementById('itemID').dataset.info);
 try {
-    const response = await fetch('/api/ware/delete', {
+    const response = await fetch('/api/warehouse/remove', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({favoriteID})
+        body: JSON.stringify({itemID})
     });
     if (!response.ok) {throw new Error('Network response was not ok');}
     const data = await response.json();
@@ -59,11 +76,11 @@ try {
         location.reload();
     }
 } catch (error) {
-    console.error('Error removing item from favorites:', error);
-    alert('An error occurred while removing item from favorites');
+    console.error('Error removing item from warehouse:', error);
+    alert('An error occurred while removing item from warehouse');
 }
 }
-*/
+
 function createButton(text, clickHandler) {
     const button = document.createElement('button');
     button.type = 'button';
@@ -72,6 +89,24 @@ function createButton(text, clickHandler) {
     button.addEventListener('click', clickHandler);
     return button;
 }
+
+function makeRowEditable(row) {
+    var cells = row.getElementsByTagName('td');
+    var originalRowHTML = row.innerHTML;
+
+    for (var i = 1; i < cells.length - 1; i++) {
+        var content = cells[i].textContent;
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.value = content;
+        cells[i].innerHTML = '';
+        cells[i].appendChild(input);
+    }
+    var actionsCell = cells[cells.length - 1];
+    actionsCell.innerHTML = <button onclick="updateItem(this)">Save Changes</button>;
+//<button onclick="cancelEdit(this, '${originalRowHTML}')">Cancel</button>;
+}
+
 /**
  * All of the functions below do not update the database, they just change the html code, which isn't sufficient.
  * When you add/edit/remove an item, it should simply be inserted/updated/deleted in the database, then all you need to do is refresh the page.
@@ -131,25 +166,6 @@ function editItem(id) {
 }
 
 ///**@deprecated*/
-function makeRowEditable(row) {
-    var cells = row.getElementsByTagName('td');
-    var originalRowHTML = row.innerHTML;
-
-    for (var i = 1; i < cells.length - 1; i++) {
-        var content = cells[i].textContent;
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.value = content;
-        cells[i].innerHTML = '';
-        cells[i].appendChild(input);
-    }
-
-    var actionsCell = cells[cells.length - 1];
-    actionsCell.innerHTML = `
-<button onclick="saveChanges(this)">Save Changes</button>
-<button onclick="cancelEdit(this, '${originalRowHTML}')">Cancel</button>`;
-}
-
 /**@deprecated*/
 function saveChanges(button) {
     var row = button.parentNode.parentNode;
