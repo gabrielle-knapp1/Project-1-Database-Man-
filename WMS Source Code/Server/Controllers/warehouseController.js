@@ -26,7 +26,11 @@ function AddItem(req, res) {}
 
 function EditItem(req, res) {}
 
-function RemoveItem(req, res) {}
+function RemoveItem(req, res) {
+    //use the item in the req.body and delete it from the admin warehouse
+    mysql.insertQuery("delete from vItems where itemID=?", [req.session.itemID]);
+    res.send({success: true});
+}
 
 module.exports = {
     GetFavorites,
