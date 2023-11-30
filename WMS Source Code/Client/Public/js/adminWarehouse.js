@@ -40,6 +40,37 @@ async function RefreshTable() {
     }
 }
 
+function editItem(id) {
+    var table = document.querySelector('tbody');
+    var rows = table.getElementsByTagName('tr');
+    for (var i = 0; i < rows.length; i++) {
+        var rowId = rows[i].getElementsByTagName('button')[0].textContent;
+        if (rowId === id.toString()) {
+            makeRowEditable(rows[i]);
+            break;
+        }
+    }
+}
+
+function makeRowEditable(row) {
+    var cells = row.getElementsByTagName('td');
+    var originalRowHTML = row.innerHTML;
+
+    // Extract the item ID from the first cell
+    var originalItemID = cells[0].textContent;
+
+    for (var i = 1; i < cells.length - 1; i++) {
+        var content = cells[i].textContent;
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.value = content;
+        cells[i].appendChild(input);
+    }
+
+    var actionsCell = cells[cells.length - 1];
+    updateItem(cells[0],cells[1],cells[2], cells[3]);
+}
+
 async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
     try {
         const response = await fetch('/api/warehouse/edit', {
@@ -55,144 +86,4 @@ async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
         console.error('Error updating item:', error);
         alert('An error occurred while updating item');
     }
-}
-
-async function removeItem(){
-//Here I'll need to remove the item from the items table in the database
-const itemID = parseInt(document.getElementById('itemID').dataset.info);
-try {
-    const response = await fetch('/api/warehouse/remove', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({itemID})
-    });
-    if (!response.ok) {throw new Error('Network response was not ok');}
-    const data = await response.json();
-    console.log(data);
-    if (data.success) {
-        location.reload();
-    }
-} catch (error) {
-    console.error('Error removing item from warehouse:', error);
-    alert('An error occurred while removing item from warehouse');
-}
-}
-
-function createButton(text, clickHandler) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = text;
-    button.classList.add('action-button'); // Add a CSS class for styling
-    button.addEventListener('click', clickHandler);
-    return button;
-}
-
-function makeRowEditable(row) {
-    var cells = row.getElementsByTagName('td');
-    var originalRowHTML = row.innerHTML;
-
-    // Extract the item ID from the first cell
-    var originalItemID = cells[0].textContent;
-
-    for (var i = 1; i < cells.length - 1; i++) {
-        var content = cells[i].textContent;
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.value = content;
-        cells[i].innerHTML = '';
-        cells[i].appendChild(input);
-    }
-
-    var actionsCell = cells[cells.length - 1];
-
-    // Pass both original and new item IDs to the updateItem function
-    actionsCell.innerHTML = `<button onclick="updateItem(this.itemID, this.name, this.stockQuantity, this.pricePerUnit)">Save Changes</button>`;
-}
-
-/**
- * All of the functions below do not update the database, they just change the html code, which isn't sufficient.
- * When you add/edit/remove an item, it should simply be inserted/updated/deleted in the database, then all you need to do is refresh the page.
- * See warehouseController.js and cartController.js
- */
-
-/**@deprecated*/
-function addItem() {
-    // Add fake item data
-    var fakeItem = {
-        id: 7,
-        product: 'New Product',
-        quantity: 5,
-        price: '$100.00',
-    };
-
-    // Add the new item to the table
-    var table = document.querySelector('table tbody');
-    var newRow = table.insertRow(table.rows.length);
-    newRow.innerHTML = `<td><button onclick="openModal(${fakeItem.id})">${fakeItem.id}</button></td>
-                        <td>${fakeItem.product}</td>
-                        <td>${fakeItem.quantity}</td>
-                        <td>${fakeItem.price}</td>
-                        <td>
-                            <button onclick="editItem(${fakeItem.id})">Edit Item</button>
-                            <button onclick="removeItem(this)">Remove Item</button>
-                        </td>`;
-}
-
-function openModal(id) {
-    var modal = document.getElementById("myModal");
-    var modalContent = document.getElementById("modalContent");
-
-    // Set the content of the modal (you can customize this)
-    modalContent.innerHTML = 'Content for ID ' + id;
-
-    modal.style.display = "block";
-}
-
-///**@deprecated*/
-function closeModal() {
-    var modal = document.getElementById("myModal");
-    modal.style.display = "none";
-}
-
-///**@deprecated*/
-function editItem(id) {
-    var table = document.querySelector('table tbody');
-    var rows = table.getElementsByTagName('tr');
-    for (var i = 0; i < rows.length; i++) {
-        var rowId = rows[i].getElementsByTagName('button')[0].textContent;
-        if (rowId === id.toString()) {
-            makeRowEditable(rows[i]);
-            break;
-        }
-    }
-}
-
-///**@deprecated*/
-/**@deprecated*/
-function saveChanges(button) {
-    var row = button.parentNode.parentNode;
-    var cells = row.getElementsByTagName('td');
-    for (var i = 1; i < cells.length - 1; i++) {
-        var input = cells[i].getElementsByTagName('input')[0];
-        if (input) {
-            cells[i].textContent = input.value;
-        }
-    }
-
-    var actionsCell = cells[cells.length - 1];
-    actionsCell.innerHTML = `
-<button onclick="editItem(${row.cells[0].textContent})">Edit Item</button>
-<button onclick="removeItem(this)">Remove Item</button>`;
-}
-
-/**@deprecated*/
-function cancelEdit(button, originalRowHTML) {
-    var row = button.parentNode.parentNode;
-    row.innerHTML = originalRowHTML;
-}
-
-/**@deprecated*/
-function removeItem(button) {
-    var row = button.parentNode.parentNode;
-    row.parentNode.removeChild(row);
 }
