@@ -71,6 +71,14 @@ function makeRowEditable(row) {
     updateItem(cells[0],cells[1],cells[2], cells[3]);
 }
 
+function createButton(text, clickHandler) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = text;
+    button.classList.add('action-button'); // Add a CSS class for styling
+    button.addEventListener('click', clickHandler);
+    return button;
+}
 async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
     try {
         const response = await fetch('/api/warehouse/edit', {
