@@ -25,10 +25,8 @@ async function RefreshTable() {
                 //const descriptionCell = document.createElement('td');
 
                 row.appendChild(document.createElement('td')).textContent = item.itemID;
-                row.appendChild(document.createElement('td')).textContent = item.type;
                 row.appendChild(document.createElement('td')).textContent = item.name;
-                row.appendChild(document.createElement('td')).textContent = item.providerID;
-                row.appendChild(document.createElement('td')).textContent = item.placeID;
+                row.appendChild(document.createElement('td')).textContent = item.stockQuantity;
                 row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
                 //row.appendChild(createButton("Remove Item", () => removeItem));
                 row.appendChild(createButton("Edit Item", () => editItem(item.itemID)));
@@ -42,12 +40,12 @@ async function RefreshTable() {
     }
 }
 
-async function updateItem(newItemID, originalItemID, type, name, providerID, stockQuantity, placeID, pricePerUnit) {
+async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
     try {
         const response = await fetch('/api/warehouse/edit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({newItemID, originalItemID, type, name, providerID, stockQuantity, placeID, pricePerUnit})
+            body: JSON.stringify({itemID, name, stockQuantity, pricePerUnit})
         });
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
@@ -57,7 +55,6 @@ async function updateItem(newItemID, originalItemID, type, name, providerID, sto
         console.error('Error updating item:', error);
         alert('An error occurred while updating item');
     }
-    console.log('Original Item ID:', originalItemID);
 }
 
 async function removeItem(){
@@ -109,7 +106,7 @@ function makeRowEditable(row) {
     var actionsCell = cells[cells.length - 1];
 
     // Pass both original and new item IDs to the updateItem function
-    actionsCell.innerHTML = `<button onclick="updateItem('${originalItemID}', this)">Save Changes</button>`;
+    actionsCell.innerHTML = `<button onclick="updateItem(this.itemID, this.name, this.stockQuantity, this.pricePerUnit)">Save Changes</button>`;
 }
 
 /**
