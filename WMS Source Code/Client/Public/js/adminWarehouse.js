@@ -68,7 +68,10 @@ function makeRowEditable(row) {
     }
 
     var actionsCell = cells[cells.length - 1];
-    updateItem(cells[0],cells[1],cells[2], cells[3]);
+    updateItem(cells[0].textContent,
+  cells[1].textContent,
+  cells[2].textContent,
+  cells[3].textContent);
 }
 
 function createButton(text, clickHandler) {
