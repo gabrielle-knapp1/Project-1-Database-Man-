@@ -31,7 +31,6 @@ async function RefreshTable() {
                 //row.appendChild(createButton("Remove Item", () => removeItem));
                 row.appendChild(createButton("Edit Item", () => editItem(item.itemID)));
                 tableBody.appendChild(row);
-                openModal(item.itemID);
             });
         }
     } catch (error) {
