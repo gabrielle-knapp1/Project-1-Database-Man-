@@ -43,7 +43,7 @@ function editItem(id) {
     var table = document.querySelector('tbody');
     var rows = table.getElementsByTagName('tr');
     for (var i = 0; i < rows.length; i++) {
-        var rowId = rows[i].getElementsByTagName('button')[0].textContent;
+        var rowId = rows[i].getElementsByTagName('td')[0].textContent;
         if (rowId === id.toString()) {
             makeRowEditable(rows[i]);
             break;
