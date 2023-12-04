@@ -49,8 +49,13 @@ async function Purchase(req, res) {
     res.send(response);
 }
 
-function AddToCart(req, res) {
+async function AddToCart(req, res) {
     //get the item in the req.body and insert it into this user's cart
+    let quantity = 1;
+    let borrowing = false;
+    let checkedOut = false;
+    mysql.insertQuery("insert into vCarts(username, itemID, checkOutTime, quantity, borrowing, checkedOut) values (?, ?, ?, ?, ?, ?)", [req.session.username, req.body.id, now(), quantity, borrowing, checkedOut]);
+    res.send({success: true});
 }
 
 function DeleteFromCart(req, res) {
