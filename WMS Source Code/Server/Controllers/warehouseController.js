@@ -29,6 +29,12 @@ async function GetWarehouse(req, res) {
 function AddItem(req, res) {}
 
 //The only potential problem here I see could be from the itemID, I might not declare that properly
+/*
+You want your prepared statement to look something like this:
+    update vItems set itemID=?, name=?, stockQuantity=?, pricePerUnit=? where itemID=?
+    and your values should be [newItemID, name, stockQuantity, pricePerUnit, originalName]
+Then use the if statements to not include the attributes that you don't want to update.
+*/
 function EditItem(req, res) {
     try {
         const {itemID, name, stockQuantity, pricePerUnit} = req.body;
