@@ -6,8 +6,12 @@ async function GetFavorites(req, res) {
     res.send({ success: true, items: rows })
 }
 
-function AddFavorite(req, res) {
+async function AddFavorite(req, res) {
     //use the item in the req.body and insert it into this user's favorites
+    //Trying to figure out how to make the new favoriteID be one more than the last favoriteID
+    const lastID = await mysql.selectQuery("select favoriteID from vFavorites ORDER BY id DESC LIMIT 1", []);
+    mysql.insertQuery("insert into vFavorites(favoriteID, username, itemID) values (?, ?, ?)", [lastID, req.session.username, req.body.id]);
+    res.send({success: true});
 }
 
 function RemoveFavorite(req, res) {
