@@ -51,28 +51,6 @@ function editItem(id) {
     }
 }
 
-function makeRowEditable(row) {
-    var cells = row.getElementsByTagName('td');
-    var originalRowHTML = row.innerHTML;
-
-    // Extract the item ID from the first cell
-    var originalItemID = cells[0].textContent;
-
-    for (var i = 1; i < cells.length - 1; i++) {
-        var content = cells[i].textContent;
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.value = content;
-        cells[i].appendChild(input);
-    }
-
-    var actionsCell = cells[cells.length - 1];
-    updateItem(cells[0].textContent,
-  cells[1].textContent,
-  cells[2].textContent,
-  cells[3].textContent);
-}
-
 function createButton(text, clickHandler) {
     const button = document.createElement('button');
     button.type = 'button';
@@ -96,4 +74,26 @@ async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
         console.error('Error updating item:', error);
         alert('An error occurred while updating item');
     }
+}
+function makeRowEditable(row) {
+    var cells = row.getElementsByTagName('td');
+    var originalRowHTML = row.innerHTML;
+
+    // Extract the item ID from the first cell
+    var originalItemID = cells[0].textContent;
+
+    for (var i = 1; i < cells.length - 1; i++) {
+        var content = cells[i].textContent;
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.value = content;
+        cells[i].appendChild(input);
+    }
+    row.appendChild(createButton("Save Item", () => updateItem(cells[0].textContent,
+        cells[1].textContent,
+        cells[2].textContent,
+        cells[3].textContent)));
+        
+    //var actionsCell = cells[cells.length - 1];
+    
 }
