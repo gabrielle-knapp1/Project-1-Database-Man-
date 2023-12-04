@@ -26,10 +26,11 @@ async function RefreshTable() {
                 //const descriptionCell = document.createElement('td');
 
                 row.appendChild(document.createElement('td')).textContent = item.favoriteID;
-                row.appendChild(document.createElement('td')).textContent = item.username;
+                row.appendChild(document.createElement('td')).textContent = item.name;
+                row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
                 row.appendChild(document.createElement('td')).textContent = item.itemID;
                 row.appendChild(createButton("Remove Item", () => removeItem));
-                row.appendChild(createButton("Add to Cart", () => addCart));
+                row.appendChild(createButton("Add to Cart", () => addCart(item.itemID));
                 tableBody.appendChild(row);
             });
         }
@@ -59,8 +60,22 @@ try {
 }
 }
 
-function addCart(){
-    //Here I'll need to add this to the cart table in the database
+async function addCart (id){
+    try {
+        const response = await fetch('/api/warehouse/addCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({id})
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log(data);
+        if (data.success) location.reload();
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
+        alert('An error occurred while adding item to cart');
+    }
+
 }
 
 function createButton(text, clickHandler) {
