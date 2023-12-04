@@ -24,6 +24,7 @@ async function GetWarehouse(req, res) {
 
 function AddItem(req, res) {}
 
+//The only potential problem here I see could be from the itemID, I might not declare that properly
 function EditItem(req, res) {
     try {
         const {itemID, name, stockQuantity, pricePerUnit} = req.body;
@@ -52,6 +53,7 @@ function EditItem(req, res) {
         mysql.insertQuery(sql, values);
         res.send({ success: true, message: "Item updated" });
     } catch {
+        console.error(error);
         res.send({ success: false, message: "Unkown error" });
     }
 }
