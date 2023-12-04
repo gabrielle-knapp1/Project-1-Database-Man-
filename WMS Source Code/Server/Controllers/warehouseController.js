@@ -33,7 +33,7 @@ function EditItem(req, res) {
     try {
         const {itemID, name, stockQuantity, pricePerUnit} = req.body;
         let sql = "update vItems set ";
-        let values = [];
+        let values = [itemID];
         let changed = false;
         if (name !== '') {
             sql += "name=?, ";
