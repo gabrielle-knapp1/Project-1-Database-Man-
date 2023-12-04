@@ -31,6 +31,8 @@ async function RefreshTable() {
                 row.appendChild(document.createElement('td')).textContent = item.providerID;
                 row.appendChild(document.createElement('td')).textContent = item.placeID;
                 row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
+                row.appendChild(createButton("Add to Favorites", () => addFav(item.itemID)));
+                row.appendChild(createButton("Add to Cart", () => addCart(item.itemID)));
 
                 /**
                  * Don't forget to create the buttons to add this item to the cart and to add this item as a favorite
@@ -44,4 +46,47 @@ async function RefreshTable() {
         console.error('Error fetching warehouse data:', error);
         alert('An error occurred while fetching warehouse data');
     }
+}
+//need to find a way to attach this to a username
+async function addFav (id){
+    try {
+        const response = await fetch('/api/warehouse/addFav', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({id})
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log(data);
+        if (data.success) location.reload();
+    } catch (error) {
+        console.error('Error adding item to favorites:', error);
+        alert('An error occurred while adding item to favorites');
+    }
+}
+//need to find a way to attach this to a username
+async function addCart (id){
+    try {
+        const response = await fetch('/api/warehouse/addCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({id})
+        });
+        if (!response.ok) {throw new Error('Network response was not ok');}
+        const data = await response.json();
+        console.log(data);
+        if (data.success) location.reload();
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
+        alert('An error occurred while adding item to cart');
+    }
+
+}
+function createButton(text, clickHandler) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = text;
+    button.classList.add('action-button'); // Add a CSS class for styling
+    button.addEventListener('click', clickHandler);
+    return button;
 }
