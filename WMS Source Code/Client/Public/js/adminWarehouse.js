@@ -51,6 +51,16 @@ function editItem(id) {
     }
 }
 
+function addItem() {
+    // Add fake item data
+    var fakeItem = {
+        id: 7,
+        product: 'New Product',
+        quantity: 5,
+        price: '$100.00',
+    };
+}
+
 function createButton(text, clickHandler) {
     const button = document.createElement('button');
     button.type = 'button';
