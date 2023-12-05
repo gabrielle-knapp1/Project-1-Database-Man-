@@ -102,8 +102,6 @@ app.route('/api/favorites/remove').post(warehouseController.RemoveFavorite);
 app.route('/api/warehouse').get(warehouseController.GetWarehouse);
 app.route('/api/warehouse/add').post(warehouseController.AddItem);
 app.route('/api/warehouse/edit').post(warehouseController.EditItem);
-app.route('/api/warehouse/addFav').post(warehouseController.AddFavorite);
-app.route('/api/warehouse/addCart').post(cartController.AddToCart);
 app.route('/api/warehouse/remove').post(warehouseController.RemoveItem);
 
 app.listen(port, () => {console.log(`Warehouse Management System Website listening on port ${port}`)});
