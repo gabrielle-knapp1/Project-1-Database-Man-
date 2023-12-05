@@ -81,7 +81,6 @@ app.route('/api/account').delete(accountController.deleteCurrentAccount);
 app.route('/api/account/delete').post(accountController.deleteUserAccount);
 app.route('/api/account/logout').get(accountController.logout);
 app.route('/api/account/session').get(accountController.getSession);
-app.route('/api/accounts').get(accountController.getAccounts);
 //admin log
 app.route('/api/adminLogs').get(adminLogController.GetAdminLogs);
 app.route('/api/adminLog').post(adminLogController.UpdateAdminLog);
