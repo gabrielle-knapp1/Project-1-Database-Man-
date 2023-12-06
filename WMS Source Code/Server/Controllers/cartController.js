@@ -17,28 +17,20 @@ async function GetMyCart(req, res) {
 }
 
 async function Purchase(req, res) {
+    //get cart
     const cartRows = await mysql.selectQuery(
         "select vCarts.itemID, name, quantity, borrowing, if(borrowing=1, 0, pricePerUnit * quantity) as totalPrice from vCarts join vItems on vCarts.itemID=vItems.itemID where username=? and checkedOut=false",
         [req.session.username]
     );
-    
     let response = {
         success: true,
         message: "Purchase Successful"
     }
-
-    //insert into the transactionLog
-    if (borrowing) mysql.insertQuery(
-            "insert into vTransactionLog(username, borrowState, totalCost, creditCardNum) values (?, 'pending', ?, ?)",
-            [req.session.username, totalCost, req.body.creditCardNumber]
-        );
-    else mysql.insertQuery(
-            "insert into vTransactionLog(username, expectedDeliveryTime, totalCost, creditCardNum) values (?, now()+interval 3 day, ?, ?)",
-            [req.session.username, totalCost, req.body.creditCardNumber]
-        );
-    const nextTransactionLogID = await mysql.selectQuery("select max(transactionID) from vTransactionLog", []);
-
-    //if requesting to borrow an item
+    //make transaction log
+    mysql.insertQuery("insert into vTransactionLog(username, totalCost, creditCardNum) values (?, 0, 0)", [req.session.username]);
+    const transactionLog = await mysql.selectQuery("SELECT transactionID FROM transactionLog WHERE transactionID = LAST_INSERT_ID()", []);
+    const nextTransactionLogID = transactionLog[0].transactionID;
+    //go thru each item
     let borrowing = false;
     let totalCost = 0.0;
     cartRows.forEach(async item => {
@@ -58,6 +50,15 @@ async function Purchase(req, res) {
             mysql.insertQuery("update vItems set stockQuantity=? where itemID=?", [stockQuantity - item.quantity, item.itemID]);
         }
     });
+    //update the transactionLog with the values based on if borrowing
+    if (borrowing) mysql.insertQuery(
+            "update vTransactionLog set borrowState='pending', totalCost=?, creditCardNum=? where transactionID=?",
+            [totalCost, req.body.creditCardNumber, nextTransactionLogID]
+        );
+    else mysql.insertQuery(
+            "update vTransactionLog set expectedDeliveryTime=now()+interval 3 day, totalCost=?, creditCardNum=? where transactionID=?",
+            [totalCost, req.body.creditCardNumber, nextTransactionLogID]
+        );
 
     //update the cart checkedOut status
     mysql.insertQuery("update vCarts set checkedOut=true, checkOutTime=NOW() where username=? and checkedOut=false", [req.session.username]);
