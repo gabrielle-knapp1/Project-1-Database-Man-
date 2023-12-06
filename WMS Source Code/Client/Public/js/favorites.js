@@ -71,7 +71,7 @@ async function addCart(id){
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log(data);
-        if (data.success) RefreshTable();
+        if (data.success) alert("Item added to cart");
     } catch (error) {
         console.error('Error adding item to cart:', error);
         alert('An error occurred while adding item to cart');
