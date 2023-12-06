@@ -119,18 +119,33 @@ async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
 }
 function makeRowEditable(row) {
     var cells = row.getElementsByTagName('td');
-    for (var i = 1; i < cells.length; i++) {
-        var content = cells[i].textContent;
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.value = content;
-        cells[i].appendChild(input);
-    }
-    row.appendChild(createButton("Save Item", () => updateItem(
-    cells[0].textContent,  // Original itemID
-    input.value,            // Updated name
-    input.value,            // Updated stockQuantity
-    input.value             // Updated pricePerUnit
-)));
     
+    // Create input fields for each value
+    var nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.value = cells[1].textContent;
+    cells[1].textContent = '';
+    cells[1].appendChild(nameInput);
+
+    var stockQuantityInput = document.createElement('input');
+    stockQuantityInput.type = 'text';
+    stockQuantityInput.value = cells[2].textContent;
+    cells[2].textContent = '';
+    cells[2].appendChild(stockQuantityInput);
+
+    var pricePerUnitInput = document.createElement('input');
+    pricePerUnitInput.type = 'text';
+    pricePerUnitInput.value = cells[3].textContent;
+    cells[3].textContent = '';
+    cells[3].appendChild(pricePerUnitInput);
+
+    // Create the "Save Item" button and pass input values to updateItem
+    row.appendChild(createButton("Save Item", function () {
+        updateItem(
+            cells[0].textContent,       // Original itemID
+            nameInput.value,            // Updated name
+            stockQuantityInput.value,   // Updated stockQuantity
+            pricePerUnitInput.value     // Updated pricePerUnit
+        );
+    }));
 }
