@@ -68,31 +68,12 @@ async function addItem() {
         console.log(data);
 
         if (data.success) {
-            // Add the new item to the table
-            const tableBody = document.querySelector('tbody');
-            const newRow = createRow(newItem);
-            tableBody.appendChild(newRow);
-
-            // Refresh the entire table
             RefreshTable();
         }
     } catch (error) {
         console.error('Error adding item:', error);
         alert('An error occurred while adding item');
     }
-}
-
-function createRow(item) {
-    const row = document.createElement('tr');
-    row.id = `itemEntry${item.itemID}`;
-
-    row.appendChild(document.createElement('td')).textContent = item.itemID;
-    row.appendChild(document.createElement('td')).textContent = item.name;
-    row.appendChild(document.createElement('td')).textContent = item.stockQuantity;
-    row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
-    row.appendChild(createButton("Edit Item", () => editItem(item.itemID)));
-
-    return row;
 }
 
 function createButton(text, clickHandler) {
