@@ -27,31 +27,40 @@ function AddItem(req, res) {
 
 function EditItem(req, res) {
     try {
-        const {itemID, name, stockQuantity, pricePerUnit} = req.body;
+        const { itemID, name, stockQuantity, pricePerUnit } = req.body;
         let sql = "update vItems set ";
         let values = [];
+
         if (name !== '') {
             sql += "name=?, ";
             values.push(name);
         }
+
         if (stockQuantity !== '') {
+            // Parse stockQuantity as an integer
             sql += "stockQuantity=?, ";
-            values.push(stockQuantity);
+            values.push(parseInt(stockQuantity, 10));
         }
+
         if (pricePerUnit !== '') {
+            // Parse pricePerUnit as a float
             sql += "pricePerUnit=?, ";
-            values.push(pricePerUnit);
+            values.push(parseFloat(pricePerUnit));
         }
-        if (values.length == 0)
+
+        if (values.length === 0)
             return res.send({ success: false, message: "You must change at least one field." });
+
         sql = sql.slice(0, -2);
         sql += " where itemID=?";
-        values.push(itemID);
+        // Parse itemID as an integer
+        values.push(parseInt(itemID, 10));
+
         mysql.insertQuery(sql, values);
         res.send({ success: true, message: "Item updated" });
-    } catch {
+    } catch (error) {
         console.error(error);
-        res.send({ success: false, message: "Unkown error" });
+        res.send({ success: false, message: "Unknown error" });
     }
 }
 
