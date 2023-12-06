@@ -70,7 +70,7 @@ async function AddToCart(req, res) {
     let quantity = 1;
     let borrowing = false;
     let checkedOut = false;
-    mysql.insertQuery("insert into vCarts(username, itemID, quantity, borrowing, checkedOut) values (?, ?, ?, ?, ?, ?)", [req.session.username, req.body.id, quantity, borrowing, checkedOut]);
+    mysql.insertQuery("insert into vCarts(username, itemID, quantity, borrowing, checkedOut) values (?, ?, ?, ?, ?)", [req.session.username, req.body.id, quantity, borrowing, checkedOut]);
     res.send({success: true});
 }
 
