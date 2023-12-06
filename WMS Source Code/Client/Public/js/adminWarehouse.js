@@ -53,18 +53,11 @@ function editItem(id) {
 
 async function addItem() {
     try {
-        // Assuming you have a form to gather the item details, replace the following with your form data
-        const newItem = {
-            itemID: 7,
-            name: 'New Product',
-            stockQuantity: 5,
-            pricePerUnit: 100.00,
-        };
 
         const response = await fetch('/api/warehouse/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newItem.name, newItem.stockQuantity, newItem.pricePerUnit)
+            body: JSON.stringify({name: 'New Product', stockQuantity: 5, pricePerUnit: 100})//default item
         });
 
         if (!response.ok) {
