@@ -16,6 +16,7 @@ async function RefreshTable() {
             const warehouse = data.items;
             // Get the table body element
             const tableBody = document.querySelector('tbody');
+            tableBody.innerHTML = '';
 
             // Populate the table with item data
             warehouse.forEach(item => {
@@ -94,7 +95,7 @@ async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log(data);
-        if (data.success) location.reload();
+        if (data.success) RefreshTable();
     } catch (error) {
         console.error('Error updating item:', error);
         alert('An error occurred while updating item');

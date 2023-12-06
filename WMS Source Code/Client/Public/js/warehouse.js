@@ -17,6 +17,7 @@ async function RefreshTable() {
 
             // Get the table body element
             const tableBody = document.querySelector('tbody');
+            tableBody.innerHTML = '';
 
             // Populate the table with item data
             warehouse.forEach(item => {
@@ -58,7 +59,7 @@ async function addFav (id){
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log(data);
-        if (data.success) location.reload();
+        if (data.success) RefreshTable();
     } catch (error) {
         console.error('Error adding item to favorites:', error);
         alert('An error occurred while adding item to favorites');
@@ -75,7 +76,7 @@ async function addCart (id){
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log(data);
-        if (data.success) location.reload();
+        if (data.success) RefreshTable();
     } catch (error) {
         console.error('Error adding item to cart:', error);
         alert('An error occurred while adding item to cart');

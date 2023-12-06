@@ -17,6 +17,7 @@ async function RefreshTable() {
 
             // Get the table body element
             const tableBody = document.querySelector('tbody');
+            tableBody.innerHTML = '';
 
             // Populate the table with log data
             adminLogs.forEach(log => {
@@ -89,7 +90,7 @@ async function updateAdminLogDescription(logID, description, accepted) {
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log(data);
-        if (data.success) location.reload();
+        if (data.success) RefreshTable();
     } catch (error) {
         console.error('Error updating admin log:', error);
         alert('An error occurred while updating the admin log');

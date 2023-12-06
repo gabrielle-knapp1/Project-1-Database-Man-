@@ -17,6 +17,7 @@ async function RefreshCart() {
 
             // Get the table body element
             const tableBody = document.querySelector('tbody');
+            tableBody.innerHTML = '';
 
             // Populate the table with cart data
             cart.forEach(itemRow => {
@@ -82,7 +83,7 @@ async function RemoveFromCart() {
         console.log(data);
         if (data.success) {
             ClosePopup('editItemPopup');
-            location.reload();
+            RefreshCart();
         }
     } catch (error) {
         console.error('Error removing item from cart:', error);
@@ -104,7 +105,7 @@ async function SetQuantity() {
         console.log(data);
         if (data.success) {
             ClosePopup('editItemPopup');
-            location.reload();
+            RefreshCart();
         }
     } catch (error) {
         console.error('Error changing item quantity:', error);
@@ -157,7 +158,7 @@ async function SubmitTransaction() {
             console.log(data);
             if (data.success) {
                 ClosePopup('checkOutPopup');
-                location.reload();
+                RefreshCart();
                 alert(data.message);
             }
         } catch (error) {

@@ -16,7 +16,8 @@ async function RefreshTable() {
             const transactionLogs = data.logs;
 
             // Get the table body element
-            const tableBody = document.getElementById('transactions')
+            const tableBody = document.getElementById('transactions');
+            tableBody.innerHTML = '';
 
             // Populate the table with log data
             transactionLogs.forEach(log => {
