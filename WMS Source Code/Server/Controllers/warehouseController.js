@@ -1,16 +1,12 @@
 const mysql = require('../mysql');
 
 async function GetFavorites(req, res) {
-    //select all items from the favorites table where the username matches the session username
     const rows = await mysql.selectQuery("select favoriteID, username, itemID from vFavorites where username = ?", [req.session.username]);
     res.send({ success: true, items: rows })
 }
 
 async function AddFavorite(req, res) {
-    //use the item in the req.body and insert it into this user's favorites
-    //Trying to figure out how to make the new favoriteID be one more than the last favoriteID
-    const lastID = await mysql.selectQuery("select favoriteID from vFavorites ORDER BY id DESC LIMIT 1", []);
-    mysql.insertQuery("insert into vFavorites(favoriteID, username, itemID) values (?, ?, ?)", [lastID, req.session.username, req.body.id]);
+    mysql.insertQuery("insert into vFavorites(username, itemID) values (?, ?, ?)", [req.session.username, req.body.id]);
     res.send({success: true});
 }
 
@@ -27,6 +23,7 @@ async function GetWarehouse(req, res) {
 }
 
 function AddItem(req, res) {
+    //the itemID auto_increments so it's not necessary to specify the new ID
     mysql.insertQuery("insert into vItems(itemID, name, stockQuantity, pricePerUnit) values (?, ?, ?, ?)", [req.body.newItem.itemID, req.body.newItem.name, req.body.newItem.stockQuantity, req.body.newItem.pricePerUnit]);
     res.send({success: true});
 }
