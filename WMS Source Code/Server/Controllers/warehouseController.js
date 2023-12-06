@@ -11,25 +11,22 @@ async function AddFavorite(req, res) {
 }
 
 function RemoveFavorite(req, res) {
-    //use the item in the req.body and delete it from this user's favorites
     mysql.insertQuery("delete from vFavorites where username=? and favoriteID=?", [req.session.username, req.body.favoriteID]);
     res.send({success: true});
 }
 
 async function GetWarehouse(req, res) {
-    //select all the items from the warehouse table
     const rows = await mysql.selectQuery("select itemID, type, name, providerID, stockQuantity, placeID, pricePerUnit from vItems", []);
     res.send({ success: true, items: rows });
 }
 
 function AddItem(req, res) {
-    //the itemID auto_increments so it's not necessary to specify the new ID
     mysql.insertQuery("insert into vItems(name, stockQuantity, pricePerUnit) values (?, ?, ?)", [req.body.name, req.body.stockQuantity, req.body.pricePerUnit]);
     res.send({success: true});
 }
 
-//The only potential problem here I see could be from the itemID, I might not declare that properly
-/*
+/*This should cause an error
+
 You want your prepared statement to look something like this:
     update vItems set name=?, stockQuantity=?, pricePerUnit=? where itemID=?
     and your values should be [name, stockQuantity, pricePerUnit, itemID]
