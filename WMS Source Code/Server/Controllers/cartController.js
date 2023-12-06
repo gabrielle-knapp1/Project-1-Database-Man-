@@ -1,22 +1,42 @@
 const mysql = require('../mysql');
 
 async function GetUserCart(req, res) {
-    const cart = await mysql.selectQuery("select vCarts.itemID, name, quantity, borrowing, checkedOut, if(borrowing=1, 0, pricePerUnit) as pricePerUnit, if(borrowing=1, 0, pricePerUnit * quantity) as totalPrice from vCarts join vItems on vCarts.itemID=vItems.itemID where username=? and checkOutTime=?", [req.body.username, req.body.checkOutTime]);
+    const cart = await mysql.selectQuery(
+        "select vCarts.itemID, name, quantity, borrowing, checkedOut, if(borrowing=1, 0, pricePerUnit) as pricePerUnit, if(borrowing=1, 0, pricePerUnit * quantity) as totalPrice from vCarts join vItems on vCarts.itemID=vItems.itemID where username=? and checkOutTime=?",
+        [req.body.username, req.body.checkOutTime]
+    );
     res.send({ success: true, rows: cart });
 }
 
 async function GetMyCart(req, res) {
-    const cart = await mysql.selectQuery("select vCarts.itemID, name, quantity, borrowing, if(borrowing=1, 0, pricePerUnit) as pricePerUnit, if(borrowing=1, 0, pricePerUnit * quantity) as totalPrice from vCarts join vItems on vCarts.itemID=vItems.itemID where username=? and checkedOut=false", [req.session.username]);
+    const cart = await mysql.selectQuery(
+        "select vCarts.itemID, name, quantity, borrowing, if(borrowing=1, 0, pricePerUnit) as pricePerUnit, if(borrowing=1, 0, pricePerUnit * quantity) as totalPrice from vCarts join vItems on vCarts.itemID=vItems.itemID where username=? and checkedOut=false",
+        [req.session.username]
+    );
     res.send({ success: true, rows: cart });
 }
 
 async function Purchase(req, res) {
-    const cartRows = await mysql.selectQuery("select vCarts.itemID, name, quantity, borrowing, if(borrowing=1, 0, pricePerUnit * quantity) as totalPrice from vCarts join vItems on vCarts.itemID=vItems.itemID where username=? and checkedOut=false", [req.session.username]);
-    const nextTransactionLogID = await mysql.selectQuery("select max(transactionID)+1 from vTransactionLog", []);
+    const cartRows = await mysql.selectQuery(
+        "select vCarts.itemID, name, quantity, borrowing, if(borrowing=1, 0, pricePerUnit * quantity) as totalPrice from vCarts join vItems on vCarts.itemID=vItems.itemID where username=? and checkedOut=false",
+        [req.session.username]
+    );
+    
     let response = {
         success: true,
         message: "Purchase Successful"
     }
+
+    //insert into the transactionLog
+    if (borrowing) mysql.insertQuery(
+            "insert into vTransactionLog(username, borrowState, totalCost, creditCardNum) values (?, 'pending', ?, ?)",
+            [req.session.username, totalCost, req.body.creditCardNumber]
+        );
+    else mysql.insertQuery(
+            "insert into vTransactionLog(username, expectedDeliveryTime, totalCost, creditCardNum) values (?, now()+interval 3 day, ?, ?)",
+            [req.session.username, totalCost, req.body.creditCardNumber]
+        );
+    const nextTransactionLogID = await mysql.selectQuery("select max(transactionID) from vTransactionLog", []);
 
     //if requesting to borrow an item
     let borrowing = false;
@@ -25,7 +45,7 @@ async function Purchase(req, res) {
         if (item.borrowing) {
             borrowing = true;
             //insert new admin log entry
-            mysql.insertQuery("insert into vAdminLog(logID, description, timeStamp, transactionID) values ((select max(logID)+1 from vAdminLog), ?, now(), ?)", [`${req.session.username} Requested to Borrow Item: ${item.name}`, nextTransactionLogID]);
+            mysql.insertQuery("insert into vAdminLog(description, transactionID) values (?, ?)", [`${req.session.username} Requested to Borrow Item: ${item.name}`, nextTransactionLogID]);
         } else {
             totalCost += item.totalPrice;
             //update or items depending on the stockQuantity and quantity bought
@@ -42,10 +62,6 @@ async function Purchase(req, res) {
     //update the cart checkedOut status
     mysql.insertQuery("update vCarts set checkedOut=true, checkOutTime=NOW() where username=? and checkedOut=false", [req.session.username]);
 
-    //insert into the transactionLog
-    if (borrowing) mysql.insertQuery("insert into vTransactionLog(transactionID, username, checkoutTime, borrowState, totalCost, creditCardNum) values (?, ?, now(), 'pending', ?, ?)", [nextTransactionLogID, req.session.username, totalCost, req.body.creditCardNumber]);
-    else mysql.insertQuery("insert into vTransactionLog(transactionID, username, checkoutTime, expectedDeliveryTime, totalCost, creditCardNum) values (?, ?, now(), now()+interval 3 day, ?, ?)", [nextTransactionLogID, req.session.username, totalCost, req.body.creditCardNumber]);
-
     res.send(response);
 }
 
@@ -54,7 +70,7 @@ async function AddToCart(req, res) {
     let quantity = 1;
     let borrowing = false;
     let checkedOut = false;
-    mysql.insertQuery("insert into vCarts(username, itemID, checkOutTime, quantity, borrowing, checkedOut) values (?, ?, ?, ?, ?, ?)", [req.session.username, req.body.id, now(), quantity, borrowing, checkedOut]);
+    mysql.insertQuery("insert into vCarts(username, itemID, quantity, borrowing, checkedOut) values (?, ?, ?, ?, ?, ?)", [req.session.username, req.body.id, quantity, borrowing, checkedOut]);
     res.send({success: true});
 }
 
