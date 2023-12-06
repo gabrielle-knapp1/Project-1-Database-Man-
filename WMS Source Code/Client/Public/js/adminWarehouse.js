@@ -53,11 +53,11 @@ function editItem(id) {
 
 async function addItem() {
     try {
-
+        const newItem = {name: 'New Product', stockQuantity: 5, pricePerUnit: 100};//default item
         const response = await fetch('/api/warehouse/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({name: 'New Product', stockQuantity: 5, pricePerUnit: 100})//default item
+            body: JSON.stringify(newItem)
         });
 
         if (!response.ok) {
