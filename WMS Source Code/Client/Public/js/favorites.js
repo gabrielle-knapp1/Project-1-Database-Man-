@@ -61,9 +61,9 @@ try {
 }
 }
 
-async function addCart (id){
+async function addCart(id){
     try {
-        const response = await fetch('/api/warehouse/addCart', {
+        const response = await fetch('/api/cart/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id})
