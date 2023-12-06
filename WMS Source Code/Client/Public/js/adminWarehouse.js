@@ -103,12 +103,7 @@ async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
 }
 function makeRowEditable(row) {
     var cells = row.getElementsByTagName('td');
-    var originalRowHTML = row.innerHTML;
-
-    // Extract the item ID from the first cell
-    var originalItemID = cells[0].textContent;
-
-    for (var i = 1; i < cells.length - 1; i++) {
+    for (var i = 1; i < cells.length; i++) {
         var content = cells[i].textContent;
         var input = document.createElement('input');
         input.type = 'text';
@@ -119,7 +114,5 @@ function makeRowEditable(row) {
         cells[1].textContent,
         cells[2].textContent,
         cells[3].textContent)));
-        
-    //var actionsCell = cells[cells.length - 1];
     
 }
