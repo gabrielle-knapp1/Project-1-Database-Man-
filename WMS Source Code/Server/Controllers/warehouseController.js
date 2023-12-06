@@ -26,7 +26,10 @@ async function GetWarehouse(req, res) {
     res.send({ success: true, items: rows });
 }
 
-function AddItem(req, res) {}
+function AddItem(req, res) {
+    mysql.insertQuery("insert into vItems(itemID, name, stockQuantity, pricePerUnit) values (?, ?, ?, ?)", [req.body.newItem.itemID, req.body.newItem.name, req.body.newItem.stockQuantity, req.body.newItem.pricePerUnit]);
+    res.send({success: true});
+}
 
 //The only potential problem here I see could be from the itemID, I might not declare that properly
 /*
