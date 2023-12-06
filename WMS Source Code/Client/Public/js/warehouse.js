@@ -48,10 +48,10 @@ async function RefreshTable() {
         alert('An error occurred while fetching warehouse data');
     }
 }
-//need to find a way to attach this to a username
-async function addFav (id){
+
+async function addFav(id){
     try {
-        const response = await fetch('/api/warehouse/addFav', {
+        const response = await fetch('/api/favorites/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id})
@@ -65,10 +65,10 @@ async function addFav (id){
         alert('An error occurred while adding item to favorites');
     }
 }
-//need to find a way to attach this to a username
-async function addCart (id){
+
+async function addCart(id){
     try {
-        const response = await fetch('/api/warehouse/addCart', {
+        const response = await fetch('/api/cart/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id})

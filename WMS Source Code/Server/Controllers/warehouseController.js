@@ -38,7 +38,7 @@ function EditItem(req, res) {
             sql += "stockQuantity=?, ";
             values.push(stockQuantity);
         }
-         if (pricePerUnit !== '') {
+        if (pricePerUnit !== '') {
             sql += "pricePerUnit=?, ";
             values.push(pricePerUnit);
         }
