@@ -25,18 +25,11 @@ function AddItem(req, res) {
     res.send({success: true});
 }
 
-/*This should cause an error
-
-You want your prepared statement to look something like this:
-    update vItems set name=?, stockQuantity=?, pricePerUnit=? where itemID=?
-    and your values should be [name, stockQuantity, pricePerUnit, itemID]
-Then use the if statements to not include the attributes that you don't want to update.
-*/
 function EditItem(req, res) {
     try {
         const {itemID, name, stockQuantity, pricePerUnit} = req.body;
         let sql = "update vItems set ";
-        let values = [itemID];
+        let values = [];
         let changed = false;
         if (name !== '') {
             sql += "name=?, ";
@@ -57,6 +50,7 @@ function EditItem(req, res) {
             return res.send({ success: false, message: "You must change at least one field." });
         sql = sql.slice(0, -2);
         sql += " where itemID=?";
+        values.push(itemID);
         mysql.insertQuery(sql, values);
         res.send({ success: true, message: "Item updated" });
     } catch {
