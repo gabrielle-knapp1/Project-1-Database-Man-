@@ -58,7 +58,7 @@ async function addItem() {
             itemID: 7,
             name: 'New Product',
             stockQuantity: 5,
-            pricePerUnit: '$100.00',
+            pricePerUnit: 100.00,
         };
 
         const response = await fetch('/api/warehouse/add', {
