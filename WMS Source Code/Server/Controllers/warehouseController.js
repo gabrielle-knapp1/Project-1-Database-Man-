@@ -6,7 +6,7 @@ async function GetFavorites(req, res) {
 }
 
 async function AddFavorite(req, res) {
-    mysql.insertQuery("insert into vFavorites(username, itemID) values (?, ?, ?)", [req.session.username, req.body.id]);
+    mysql.insertQuery("insert into vFavorites(username, itemID) values (?, ?)", [req.session.username, req.body.id]);
     res.send({success: true});
 }
 
