@@ -30,23 +30,19 @@ function EditItem(req, res) {
         const {itemID, name, stockQuantity, pricePerUnit} = req.body;
         let sql = "update vItems set ";
         let values = [];
-        let changed = false;
         if (name !== '') {
             sql += "name=?, ";
             values.push(name);
-            changed = true;
         }
         if (stockQuantity !== '') {
             sql += "stockQuantity=?, ";
             values.push(stockQuantity);
-            changed = true;
         }
          if (pricePerUnit !== '') {
             sql += "pricePerUnit=?, ";
             values.push(pricePerUnit);
-            changed = true;
         }
-        if (!changed)
+        if (values.length == 0)
             return res.send({ success: false, message: "You must change at least one field." });
         sql = sql.slice(0, -2);
         sql += " where itemID=?";

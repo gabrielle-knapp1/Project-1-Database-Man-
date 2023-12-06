@@ -89,39 +89,32 @@ function updateAccount(req, res) {
         const { username, password, firstName, lastName, address, email, ogUsername } = req.body;
         let sql = "update vAccounts set ";
         let values = [];
-        let changed = false;
         if (username !== '') {
             sql += "username=?, ";
             values.push(username);
             req.session.username = username;
-            changed = true;
         }
         if (password !== '') {
             sql += "password=?, ";
             values.push(hashPassword(password));
-            changed = true;
         }
         if (firstName !== '') {
             sql += "firstName=?, ";
             values.push(firstName);
-            changed = true;
         }
         if (lastName !== '') {
             sql += "lastName=?, ";
             values.push(lastName);
-            changed = true;
         }
         if (address !== '') {
             sql += "address=?, ";
             values.push(address);
-            changed = true;
         }
         if (email !== '') {
             sql += "email=?, ";
             values.push(email);
-            changed = true;
         }
-        if (!changed)
+        if (values.length == 0)
             return res.send({ success: false, message: "You must change at least one field." });
         sql = sql.slice(0, -2);
         sql += " where username=?";
