@@ -24,7 +24,7 @@ async function GetWarehouse(req, res) {
 
 function AddItem(req, res) {
     //the itemID auto_increments so it's not necessary to specify the new ID
-    mysql.insertQuery("insert into vItems(itemID, name, stockQuantity, pricePerUnit) values (?, ?, ?, ?)", [req.body.newItem.itemID, req.body.newItem.name, req.body.newItem.stockQuantity, req.body.newItem.pricePerUnit]);
+    mysql.insertQuery("insert into vItems(itemID, name, stockQuantity, pricePerUnit) values (?, ?, ?, ?)", [req.body.itemID, req.body.name, req.body.stockQuantity, req.body.pricePerUnit]);
     res.send({success: true});
 }
 
