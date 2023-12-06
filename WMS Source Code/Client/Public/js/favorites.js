@@ -29,7 +29,7 @@ async function RefreshTable() {
                 row.appendChild(document.createElement('td')).textContent = item.name;
                 row.appendChild(document.createElement('td')).textContent = item.pricePerUnit;
                 row.appendChild(document.createElement('td')).textContent = item.itemID;
-                row.appendChild(createButton("Remove Item", () => removeItem));
+                row.appendChild(createButton("Remove Item", () => removeItem()));
                 row.appendChild(createButton("Add to Cart", () => addCart(item.itemID)));
                 tableBody.appendChild(row);
             });
