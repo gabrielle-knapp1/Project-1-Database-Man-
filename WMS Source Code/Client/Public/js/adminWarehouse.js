@@ -64,7 +64,7 @@ async function addItem() {
         const response = await fetch('/api/warehouse/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newItem)
+            body: JSON.stringify(newItem.name, newItem.stockQuantity, newItem.pricePerUnit)
         });
 
         if (!response.ok) {
