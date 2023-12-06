@@ -87,15 +87,31 @@ function createButton(text, clickHandler) {
 }
 async function updateItem(itemID, name, stockQuantity, pricePerUnit) {
     try {
+        // Parse stockQuantity and pricePerUnit if needed
+        const parsedStockQuantity = parseInt(stockQuantity, 10);
+        const parsedPricePerUnit = parseFloat(pricePerUnit);
+
         const response = await fetch('/api/warehouse/edit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({itemID, name, stockQuantity, pricePerUnit})
+            body: JSON.stringify({
+                itemID,
+                name,
+                stockQuantity: isNaN(parsedStockQuantity) ? null : parsedStockQuantity,
+                pricePerUnit: isNaN(parsedPricePerUnit) ? null : parsedPricePerUnit,
+            })
         });
-        if (!response.ok) {throw new Error('Network response was not ok');}
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
         const data = await response.json();
         console.log(data);
-        if (data.success) RefreshTable();
+
+        if (data.success) {
+            RefreshTable();
+        }
     } catch (error) {
         console.error('Error updating item:', error);
         alert('An error occurred while updating item');
