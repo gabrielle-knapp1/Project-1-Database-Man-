@@ -59,7 +59,7 @@ async function addFav(id){
         if (!response.ok) {throw new Error('Network response was not ok');}
         const data = await response.json();
         console.log(data);
-        if (data.success) RefreshTable();
+        if (data.success) alert("Item added to favorites");
     } catch (error) {
         console.error('Error adding item to favorites:', error);
         alert('An error occurred while adding item to favorites');
