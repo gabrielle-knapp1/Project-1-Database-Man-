@@ -110,9 +110,11 @@ function makeRowEditable(row) {
         input.value = content;
         cells[i].appendChild(input);
     }
-    row.appendChild(createButton("Save Item", () => updateItem(cells[0].textContent,
-        cells[1].textContent,
-        cells[2].textContent,
-        cells[3].textContent)));
+    row.appendChild(createButton("Save Item", () => updateItem(
+    cells[0].textContent,  // Original itemID
+    input.value,            // Updated name
+    input.value,            // Updated stockQuantity
+    input.value             // Updated pricePerUnit
+)));
     
 }
