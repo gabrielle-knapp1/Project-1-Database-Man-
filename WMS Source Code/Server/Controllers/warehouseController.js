@@ -48,7 +48,7 @@ function EditItem(req, res) {
         }
         if (!changed)
             return res.send({ success: false, message: "You must change at least one field." });
-        //sql = sql.slice(0, -2);
+        sql = sql.slice(0, -2);
         sql += " where itemID=?";
         values.push(itemID);
         mysql.insertQuery(sql, values);
